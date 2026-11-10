@@ -1,0 +1,120 @@
+@use "../foundation/mixins" as *;
+
+.l-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+
+  &__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-en);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  &__logo-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--color-primary);
+  }
+
+  // ハンバーガーボタン（スマホ・タブレットだけ表示）
+  &__menu-btn {
+    display: grid;
+    place-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    cursor: pointer;
+
+    span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--color-text);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    &[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    &[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    &[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    @include pc {
+      display: none;
+    }
+  }
+
+  &__nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -16px;
+    right: -16px;
+    padding: 8px 16px 24px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+
+    &.is-open {
+      display: block;
+    }
+
+    @include pc {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      position: static;
+      padding: 0;
+      background: none;
+      border: 0;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      display: block;
+      padding: 12px 0;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    @include pc {
+      display: flex;
+      gap: 24px;
+
+      a { padding: 8px 0; }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+
+    @include pc {
+      margin-top: 0;
+    }
+  }
+}

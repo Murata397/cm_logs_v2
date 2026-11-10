@@ -1,0 +1,39 @@
+<header class="l-header" data-controller="nav">
+  <div class="l-container l-header__inner">
+    <%= link_to root_path, class: "l-header__logo" do %>
+      <span class="l-header__logo-mark" aria-hidden="true"></span>
+      <span>CM Logs</span>
+    <% end %>
+
+    <button class="l-header__menu-btn" type="button"
+            aria-controls="global-nav" aria-expanded="false" aria-label="メニューを開く"
+            data-nav-target="button" data-action="nav#toggle">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="global-nav" class="l-header__nav" aria-label="グローバルナビゲーション" data-nav-target="menu">
+      <ul class="l-header__list">
+        <li><%= link_to "整備記録", "#" %></li>
+        <li><%= link_to "グループ", "#" %></li>
+        <% if user_signed_in? %>
+          <li><%= link_to "マイカー", "#" %></li>
+          <li><%= link_to "マイページ", "#" %></li>
+        <% end %>
+      </ul>
+
+      <div class="l-header__actions">
+        <button class="c-button c-button--outline" type="button"
+                data-controller="theme" data-action="theme#toggle" aria-pressed="false">
+          <span data-theme-target="label">ダークモード</span>
+        </button>
+
+        <% if user_signed_in? %>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "c-button c-button--outline" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class: "c-button c-button--outline" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "c-button c-button--primary" %>
+        <% end %>
+      </div>
+    </nav>
+  </div>
+</header>

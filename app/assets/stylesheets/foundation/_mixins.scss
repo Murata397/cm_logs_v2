@@ -1,0 +1,11 @@
+$bp-tab: 768px;
+$bp-pc: 1024px;
+
+// スマホを基本にして、広い画面だけ上書きする
+@mixin tab {
+  @media (min-width: $bp-tab) { @content; }
+}
+
+@mixin pc {
+  @media (min-width: $bp-pc) { @content; }
+}

@@ -1,0 +1,35 @@
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &--primary {
+    color: var(--color-primary-text);
+    background: var(--color-primary);
+  }
+
+  &--outline {
+    color: var(--color-text);
+    background: transparent;
+    border-color: var(--color-text);
+  }
+}
+
+.c-flash {
+  width: min(100% - 32px, var(--container));
+  margin: 16px auto 0;
+  padding: 12px 16px;
+  color: var(--color-notice-text);
+  background: var(--color-notice-bg);
+  border-radius: var(--radius);
+}

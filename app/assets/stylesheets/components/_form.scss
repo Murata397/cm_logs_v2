@@ -1,0 +1,60 @@
+.c-form {
+  display: grid;
+  gap: 20px;
+
+  &__field {
+    display: grid;
+    gap: 8px;
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  &__input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    font: inherit;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    &:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 1px;
+    }
+  }
+
+  &__hint {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+  }
+
+  &__check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.875rem;
+  }
+
+  &__errors {
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    color: var(--color-notice-text);
+    background: var(--color-notice-bg);
+    border-radius: 8px;
+
+    ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+  }
+}
+
+.c-button--block {
+  width: 100%;
+}
