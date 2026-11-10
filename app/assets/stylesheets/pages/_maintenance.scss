@@ -1,0 +1,251 @@
+@use "../foundation/mixins" as *;
+
+.p-maintenance {
+  padding: 24px 0 80px;
+
+  // パンくずリスト
+  &__breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 24px;
+    padding: 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-sub);
+    list-style: none;
+
+    li:not(:last-child)::after {
+      content: "＞";
+      margin-left: 8px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  // PCでは本文と右サイドの2列
+  &__layout {
+    display: grid;
+    gap: 40px;
+
+    @include pc {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      align-items: start;
+    }
+  }
+
+  &__main {
+    display: grid;
+    gap: 32px;
+  }
+
+  &__header {
+    display: grid;
+    gap: 12px;
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 1.4;
+
+    @include tab {
+      font-size: 2.25rem;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-sub);
+  }
+
+  &__image {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__no-image {
+    font-family: var(--font-en);
+    letter-spacing: 0.1em;
+    color: var(--color-text-sub);
+  }
+
+  // 作業時間・費用などのまとめ（スマホ2列、タブレット以上4列）
+  &__summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+
+    @include tab {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    div {
+      padding: 14px 16px;
+      background: var(--color-surface);
+      border-radius: 10px;
+    }
+
+    dt {
+      font-size: 0.75rem;
+      color: var(--color-text-sub);
+    }
+
+    dd {
+      margin: 2px 0 0;
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+  }
+
+  &__lead {
+    margin: 0;
+  }
+
+  &__section {
+    display: grid;
+    gap: 16px;
+  }
+
+  &__heading {
+    margin: 0;
+    padding-left: 12px;
+    font-size: 1.25rem;
+    border-left: 4px solid var(--color-primary);
+  }
+
+  &__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 6px 14px;
+      font-size: 0.875rem;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+    }
+  }
+
+  // 作業手順
+  &__steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__step {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &__step-num {
+    align-self: start;
+    padding: 4px 10px;
+    font-family: var(--font-en);
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--color-primary-text);
+    background: var(--color-primary);
+    border-radius: 999px;
+  }
+
+  &__step-body {
+    display: grid;
+    gap: 12px;
+  }
+
+  &__step-title {
+    margin: 0;
+    font-size: 1.0625rem;
+  }
+
+  &__step-image {
+    border-radius: 8px;
+  }
+
+  &__step-text {
+    margin: 0;
+    color: var(--color-text-sub);
+  }
+
+  // 右サイド
+  &__side {
+    display: grid;
+    gap: 24px;
+  }
+
+  &__box {
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  &__box-title {
+    margin: 0 0 12px;
+    font-size: 1rem;
+  }
+
+  &__author {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  &__author-text {
+    margin: 8px 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text-sub);
+  }
+
+  &__related {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      display: grid;
+      gap: 2px;
+      text-decoration: none;
+    }
+  }
+
+  &__related-title {
+    font-weight: 500;
+  }
+
+  &__related-sub {
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+  }
+}

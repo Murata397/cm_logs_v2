@@ -1,0 +1,25 @@
+<article class="c-card">
+  <%= link_to maintenance_path(maintenance), class: "c-card__link" do %>
+    <div class="c-card__image">
+      <% if maintenance.images.attached? %>
+        <%= image_tag maintenance.images.first, alt: "", loading: "lazy" %>
+      <% else %>
+        <span class="c-card__no-image">NO IMAGE</span>
+      <% end %>
+    </div>
+
+    <div class="c-card__body">
+      <div class="c-card__badges">
+        <span class="c-badge c-badge--primary"><%= maintenance.category %></span>
+        <span class="c-badge">難易度：<%= difficulty_label(maintenance) %></span>
+      </div>
+      <h2 class="c-card__title"><%= maintenance.title %></h2>
+      <p class="c-card__car"><%= maintenance.car.manufacturer_name %> <%= maintenance.car.car_name %></p>
+      <dl class="c-card__meta">
+        <div><dt>作業時間</dt><dd><%= work_time_label(maintenance.work_time_minutes) %></dd></div>
+        <div><dt>費用</dt><dd><%= yen(maintenance.work_cost) %></dd></div>
+      </dl>
+      <p class="c-card__user"><%= maintenance.user.name %></p>
+    </div>
+  <% end %>
+</article>

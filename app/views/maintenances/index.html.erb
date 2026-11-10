@@ -1,0 +1,16 @@
+<% content_for :title, "整備記録 | CM Logs" %>
+
+<section class="l-container p-maintenances">
+  <header class="p-maintenances__head">
+    <h1 class="p-maintenances__title">整備記録</h1>
+    <p class="p-maintenances__lead">みんなの整備手順から探す</p>
+  </header>
+
+  <% if @maintenances.any? %>
+    <div class="p-maintenances__grid">
+      <%= render @maintenances %>
+    </div>
+  <% else %>
+    <p>まだ整備記録がありません。</p>
+  <% end %>
+</section>

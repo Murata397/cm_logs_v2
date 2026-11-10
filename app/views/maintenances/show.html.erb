@@ -1,0 +1,123 @@
+<% content_for :title, "#{@maintenance.title} | CM Logs" %>
+
+<div class="l-container p-maintenance">
+  <nav class="p-maintenance__breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><%= link_to "ホーム", root_path %></li>
+      <li><%= link_to "整備記録", maintenances_path %></li>
+      <li aria-current="page"><%= @maintenance.title %></li>
+    </ol>
+  </nav>
+
+  <div class="p-maintenance__layout">
+    <article class="p-maintenance__main">
+      <header class="p-maintenance__header">
+        <div class="p-maintenance__badges">
+          <span class="c-badge c-badge--primary"><%= @maintenance.category %></span>
+          <span class="c-badge">難易度：<%= difficulty_label(@maintenance) %></span>
+        </div>
+        <h1 class="p-maintenance__title"><%= @maintenance.title %></h1>
+        <p class="p-maintenance__meta">
+          <span><%= @maintenance.user.name %></span>
+          <span>作業日 <time datetime="<%= @maintenance.maintenance_day %>"><%= l @maintenance.maintenance_day %></time></span>
+          <span><%= @maintenance.car.manufacturer_name %> <%= @maintenance.car.car_name %>（<%= @maintenance.car.car_model %>）</span>
+        </p>
+      </header>
+
+      <div class="p-maintenance__image">
+        <% if @maintenance.images.attached? %>
+          <%= image_tag @maintenance.images.first, alt: @maintenance.title %>
+        <% else %>
+          <span class="p-maintenance__no-image">NO IMAGE</span>
+        <% end %>
+      </div>
+
+      <dl class="p-maintenance__summary">
+        <div>
+          <dt>作業時間</dt>
+          <dd><%= work_time_label(@maintenance.work_time_minutes) %></dd>
+        </div>
+        <div>
+          <dt>費用</dt>
+          <dd><%= yen(@maintenance.work_cost) %></dd>
+        </div>
+        <div>
+          <dt>難易度</dt>
+          <dd><%= difficulty_label(@maintenance) %></dd>
+        </div>
+        <div>
+          <dt>カテゴリ</dt>
+          <dd><%= @maintenance.category %></dd>
+        </div>
+      </dl>
+
+      <% if @maintenance.summary.present? %>
+        <p class="p-maintenance__lead"><%= @maintenance.summary %></p>
+      <% end %>
+
+      <% if @maintenance.tools.any? %>
+        <section class="p-maintenance__section">
+          <h2 class="p-maintenance__heading">使った工具</h2>
+          <ul class="p-maintenance__tools">
+            <% @maintenance.tools.each do |tool| %>
+              <li><%= tool.name %></li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+
+      <section class="p-maintenance__section">
+        <h2 class="p-maintenance__heading">作業手順</h2>
+        <ol class="p-maintenance__steps">
+          <% @maintenance.steps.each do |step| %>
+            <li class="p-maintenance__step">
+              <span class="p-maintenance__step-num" aria-hidden="true">STEP <%= step.position %></span>
+              <div class="p-maintenance__step-body">
+                <h3 class="p-maintenance__step-title"><%= step.title %></h3>
+                <% if step.image.attached? %>
+                  <%= image_tag step.image, alt: step.title, loading: "lazy", class: "p-maintenance__step-image" %>
+                <% end %>
+                <% if step.body.present? %>
+                  <p class="p-maintenance__step-text"><%= step.body %></p>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ol>
+      </section>
+
+      <% if @maintenance.related_information.present? %>
+        <section class="p-maintenance__section">
+          <h2 class="p-maintenance__heading">関連情報・メモ</h2>
+          <p><%= @maintenance.related_information %></p>
+        </section>
+      <% end %>
+    </article>
+
+    <aside class="p-maintenance__side">
+      <section class="p-maintenance__box">
+        <h2 class="p-maintenance__box-title">投稿者</h2>
+        <p class="p-maintenance__author"><%= @maintenance.user.name %></p>
+        <% if @maintenance.user.introduction.present? %>
+          <p class="p-maintenance__author-text"><%= @maintenance.user.introduction %></p>
+        <% end %>
+      </section>
+
+      <% if @related.any? %>
+        <section class="p-maintenance__box">
+          <h2 class="p-maintenance__box-title">同じ車種の整備記録</h2>
+          <ul class="p-maintenance__related">
+            <% @related.each do |related| %>
+              <li>
+                <%= link_to maintenance_path(related) do %>
+                  <span class="p-maintenance__related-title"><%= related.title %></span>
+                  <span class="p-maintenance__related-sub"><%= related.category %></span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </section>
+      <% end %>
+    </aside>
+  </div>
+</div>
