@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car: one
+  item: MyString
+  next_due_on: 2026-11-10
+  next_due_odometer: 1
+
+two:
+  car: two
+  item: MyString
+  next_due_on: 2026-11-10
+  next_due_odometer: 1
