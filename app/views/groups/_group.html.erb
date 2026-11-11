@@ -1,0 +1,19 @@
+<article class="c-group-card">
+  <%= link_to group_path(group), class: "c-group-card__link" do %>
+    <div class="c-group-card__image">
+      <% if group.image.attached? %>
+        <%= image_tag group.image, alt: "", loading: "lazy" %>
+      <% else %>
+        <span aria-hidden="true"><%= group.name.first %></span>
+      <% end %>
+    </div>
+    <div class="c-group-card__body">
+      <% if group.theme.present? %>
+        <span class="c-badge c-badge--primary"><%= group.theme %></span>
+      <% end %>
+      <h2 class="c-group-card__name"><%= group.name %></h2>
+      <p class="c-group-card__intro"><%= group.introduction %></p>
+      <p class="c-group-card__meta">メンバー <%= group.member_group_users.size %>人 ／ オーナー <%= group.owner.name %></p>
+    </div>
+  <% end %>
+</article>

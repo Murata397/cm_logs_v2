@@ -1,0 +1,16 @@
+<% content_for :title, "グループを編集 | CM Logs" %>
+
+<section class="p-form-page">
+  <div class="p-form-page__card">
+    <h1 class="p-form-page__title">グループを編集</h1>
+    <%= render "form", group: @group %>
+
+    <div class="p-form-page__danger">
+      <h2 class="p-form-page__danger-title">グループを削除する</h2>
+      <p>削除すると、メンバーからもグループが見えなくなります。</p>
+      <%= button_to "グループを削除", group_path(@group), method: :delete,
+            class: "c-button c-button--outline",
+            form: { data: { turbo_confirm: "「#{@group.name}」を削除しますか？" } } %>
+    </div>
+  </div>
+</section>

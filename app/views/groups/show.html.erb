@@ -1,0 +1,100 @@
+<% content_for :title, "#{@group.name} | CM Logs" %>
+
+<div class="l-container p-group">
+  <nav class="p-maintenance__breadcrumb" aria-label="パンくずリスト">
+    <ol>
+      <li><%= link_to "ホーム", root_path %></li>
+      <li><%= link_to "グループ", groups_path %></li>
+      <li aria-current="page"><%= @group.name %></li>
+    </ol>
+  </nav>
+
+  <section class="p-group__hero">
+    <div class="p-group__image">
+      <% if @group.image.attached? %>
+        <%= image_tag @group.image, alt: "" %>
+      <% else %>
+        <span aria-hidden="true"><%= @group.name.first %></span>
+      <% end %>
+    </div>
+
+    <div class="p-group__info">
+      <% if @group.theme.present? %>
+        <span class="c-badge c-badge--primary"><%= @group.theme %></span>
+      <% end %>
+      <h1 class="p-group__name"><%= @group.name %></h1>
+      <p class="p-group__meta">
+        オーナー <%= link_to @group.owner.name, user_path(@group.owner) %> ／ メンバー <%= @members.size %>人
+      </p>
+      <p class="p-group__intro"><%= @group.introduction %></p>
+
+      <div class="p-group__actions">
+        <% if !user_signed_in? %>
+          <p class="p-group__note"><%= link_to "ログイン", new_user_session_path %>すると参加を申請できます。</p>
+        <% elsif !can_post? %>
+          <p class="p-group__note">ゲストユーザーはグループに参加できません。</p>
+        <% elsif @group.owned_by?(current_user) %>
+          <%= link_to "グループを編集", edit_group_path(@group), class: "c-button c-button--outline" %>
+        <% elsif @status == "approved" %>
+          <span class="c-badge">参加中</span>
+          <%= button_to "グループから退出", group_membership_path(@group), method: :delete,
+                class: "c-button c-button--outline",
+                form: { data: { turbo_confirm: "「#{@group.name}」から退出しますか？" } } %>
+        <% elsif @status == "pending" %>
+          <span class="c-badge c-badge--notice">申請中</span>
+          <%= button_to "申請を取り消す", group_membership_path(@group), method: :delete, class: "c-button c-button--outline" %>
+        <% else %>
+          <%= button_to "参加を申請する", group_membership_path(@group), method: :post, class: "c-button c-button--primary" %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <% if @group.rules.present? %>
+    <section class="p-group__section">
+      <h2 class="p-group__title">ルール</h2>
+      <p class="p-group__rules"><%= @group.rules %></p>
+    </section>
+  <% end %>
+
+  <% if @pending&.any? %>
+    <section class="p-group__section p-group__requests">
+      <h2 class="p-group__title">参加申請（<%= @pending.size %>件）</h2>
+      <ul class="p-group__members">
+        <% @pending.each do |request| %>
+          <li class="p-group__member">
+            <span class="p-group__avatar" aria-hidden="true"><%= request.user.name.first %></span>
+            <%= link_to request.user.name, user_path(request.user), class: "p-group__member-name" %>
+            <div class="p-group__member-actions">
+              <%= button_to "承認", group_group_user_path(@group, request), method: :patch, class: "c-button c-button--primary" %>
+              <%= button_to "見送る", group_group_user_path(@group, request), method: :delete,
+                    class: "c-button c-button--outline",
+                    form: { data: { turbo_confirm: "#{request.user.name}さんの申請を見送りますか？" } } %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <section class="p-group__section">
+    <h2 class="p-group__title">メンバー（<%= @members.size %>人）</h2>
+    <ul class="p-group__members">
+      <% @members.each do |member| %>
+        <li class="p-group__member">
+          <span class="p-group__avatar" aria-hidden="true"><%= member.user.name.first %></span>
+          <%= link_to member.user.name, user_path(member.user), class: "p-group__member-name" %>
+          <% if member.user_id == @group.owner_id %>
+            <span class="c-badge c-badge--primary">オーナー</span>
+          <% elsif @group.owned_by?(current_user) %>
+            <div class="p-group__member-actions">
+              <%= button_to "外す", group_group_user_path(@group, member), method: :delete,
+                    class: "c-button c-button--outline",
+                    form: { data: { turbo_confirm: "#{member.user.name}さんをメンバーから外しますか？" } } %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+</div>

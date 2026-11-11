@@ -1,0 +1,29 @@
+<% content_for :title, "グループ | CM Logs" %>
+
+<section class="l-container p-groups">
+  <header class="p-groups__head">
+    <div>
+      <h1 class="p-groups__title">グループ</h1>
+      <p class="p-groups__lead">同じ車種や趣味の仲間と、整備の情報を交換しよう</p>
+    </div>
+    <% if can_post? %>
+      <%= link_to "＋ グループを作る", new_group_path, class: "c-button c-button--primary" %>
+    <% end %>
+  </header>
+
+  <%= form_with url: groups_path, method: :get, class: "p-groups__search", role: "search" do |f| %>
+    <%= f.label :q, "グループを検索", class: "u-visually-hidden" %>
+    <%= f.search_field :q, value: params[:q], placeholder: "グループ名・テーマで探す", class: "c-form__input" %>
+    <%= f.submit "検索", name: nil, class: "c-button c-button--outline" %>
+  <% end %>
+
+  <% if @groups.any? %>
+    <div class="c-card-grid">
+      <%= render @groups %>
+    </div>
+  <% else %>
+    <p class="p-groups__empty">
+      <%= params[:q].present? ? "条件に合うグループが見つかりませんでした。" : "まだグループがありません。" %>
+    </p>
+  <% end %>
+</section>

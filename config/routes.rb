@@ -16,6 +16,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
   end
+  resources :groups do
+    # 自分の参加申請・取り消し・退出
+    resource :membership, only: [:create, :destroy]
+    # オーナーによる承認・拒否・メンバーの削除
+    resources :group_users, only: [:update, :destroy]
+  end
   resources :cars do
     resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]
     resources :fuel_logs, only: [:index, :new, :create, :edit, :update, :destroy]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_11_130535) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_131858) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -81,6 +81,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_130535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_fuel_logs_on_car_id"
+  end
+
+  create_table "group_users", force: :cascade do |t|
+    t.integer "group_id", null: false
+    t.integer "user_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "user_id"], name: "index_group_users_on_group_id_and_user_id", unique: true
+    t.index ["group_id"], name: "index_group_users_on_group_id"
+    t.index ["user_id"], name: "index_group_users_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.integer "owner_id", null: false
+    t.string "name", null: false
+    t.text "introduction"
+    t.string "theme"
+    t.text "rules"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
   end
 
   create_table "inspection_schedules", force: :cascade do |t|
@@ -154,6 +177,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_11_130535) do
   add_foreign_key "favorites", "maintenances"
   add_foreign_key "favorites", "users"
   add_foreign_key "fuel_logs", "cars"
+  add_foreign_key "group_users", "groups"
+  add_foreign_key "group_users", "users"
+  add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "inspection_schedules", "cars"
   add_foreign_key "maintenance_steps", "maintenances"
   add_foreign_key "maintenance_tools", "maintenances"

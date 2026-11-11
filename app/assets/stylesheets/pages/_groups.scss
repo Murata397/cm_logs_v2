@@ -1,0 +1,183 @@
+@use "../foundation/mixins" as *;
+
+// グループ一覧
+.p-groups {
+  padding: 40px 0 80px;
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  &__lead {
+    margin: 4px 0 0;
+    color: var(--color-text-sub);
+  }
+
+  &__search {
+    display: flex;
+    gap: 8px;
+    max-width: 480px;
+    margin-bottom: 32px;
+
+    .c-form__input {
+      flex: 1;
+    }
+  }
+
+  &__empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--color-text-sub);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius);
+  }
+}
+
+// グループの詳細
+.p-group {
+  display: grid;
+  gap: 40px;
+  padding: 24px 0 80px;
+
+  &__hero {
+    display: grid;
+    gap: 24px;
+
+    @include tab {
+      grid-template-columns: 280px minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  &__image {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1 / 1;
+    max-width: 280px;
+    overflow: hidden;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  &__meta {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-sub);
+
+    a {
+      font-weight: 700;
+      color: var(--color-text);
+    }
+  }
+
+  &__intro,
+  &__rules {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  &__note {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-sub);
+
+    a {
+      color: var(--color-primary);
+    }
+  }
+
+  &__title {
+    margin: 0 0 16px;
+    font-size: 1.375rem;
+  }
+
+  // オーナーだけに見える申請の欄は、枠で目立たせる
+  &__requests {
+    padding: 24px;
+    border: 2px solid var(--color-notice-bg);
+    border-radius: var(--radius);
+  }
+
+  &__members {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__member {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--color-surface);
+    border-radius: 10px;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    font-weight: 700;
+    color: var(--color-primary-text);
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+
+  &__member-name {
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  &__member-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+  }
+}

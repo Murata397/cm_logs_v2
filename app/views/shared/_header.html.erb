@@ -11,7 +11,7 @@
     <nav id="global-nav" class="l-header__nav" aria-label="グローバルナビゲーション" data-nav-target="menu">
       <ul class="l-header__list">
         <li><%= link_to "整備記録", maintenances_path %></li>
-        <li><%= link_to "グループ", "#" %></li>
+        <li><%= link_to "グループ", groups_path %></li>
         <% if user_signed_in? %>
           <li><%= link_to "マイカー", cars_path %></li>
           <li><%= link_to "マイページ", mypage_path %></li>

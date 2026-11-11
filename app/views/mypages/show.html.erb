@@ -133,4 +133,24 @@
       <p class="p-mypage__empty">お気に入りした整備記録はまだありません。</p>
     <% end %>
   </section>
+  <section class="p-mypage__section">
+    <div class="p-mypage__head">
+      <h2 class="p-mypage__title">参加しているグループ</h2>
+      <%= link_to "グループを探す →", groups_path, class: "p-mypage__more" %>
+    </div>
+    <% if @groups.any? %>
+      <ul class="p-mypage__posts">
+        <% @groups.each do |group| %>
+          <li class="p-mypage__post">
+            <div>
+              <%= link_to group.name, group_path(group), class: "p-mypage__post-title" %>
+              <p class="p-mypage__post-sub"><%= group.owned_by?(@user) ? "オーナー" : "メンバー" %><%= " ／ #{group.theme}" if group.theme.present? %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="p-mypage__empty">参加しているグループはまだありません。</p>
+    <% end %>
+  </section>
 </div>
