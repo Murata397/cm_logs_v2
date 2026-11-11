@@ -22,6 +22,8 @@ ja:
         item: 点検・整備の内容
         next_due_on: 次回の予定日
         next_due_odometer: 次回の走行距離（km）
+      comment:
+        body: コメント
       fuel_log:
         refueled_on: 給油日
         odometer: 給油時の走行距離（km）

@@ -1,0 +1,15 @@
+<li id="<%= dom_id(comment) %>" class="p-comments__item">
+  <div class="p-comments__avatar" aria-hidden="true"><%= comment.user.name.first %></div>
+  <div class="p-comments__body">
+    <p class="p-comments__meta">
+      <span class="p-comments__name"><%= comment.user.name %></span>
+      <time datetime="<%= comment.created_at.iso8601 %>"><%= l comment.created_at, format: :short %></time>
+    </p>
+    <p class="p-comments__text"><%= comment.body %></p>
+  </div>
+  <% if user_signed_in? && comment.user_id == current_user.id %>
+    <%= button_to "削除", maintenance_comment_path(comment.maintenance, comment), method: :delete,
+          class: "p-comments__delete",
+          form: { data: { turbo_confirm: "このコメントを削除しますか？" } } %>
+  <% end %>
+</li>

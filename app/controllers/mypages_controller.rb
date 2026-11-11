@@ -14,5 +14,6 @@ class MypagesController < ApplicationController
                                   .limit(5)
 
     @maintenances = @user.maintenances.where(deleted_at: nil).includes(:car).latest.limit(10)
+    @favorites = @user.favorite_maintenances.visible.includes(:car).latest.limit(5)
   end
 end

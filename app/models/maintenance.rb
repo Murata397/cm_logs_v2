@@ -2,6 +2,7 @@ class Maintenance < ApplicationRecord
   CATEGORIES = %w[日常点検 法定点検 メンテナンス チューニング 洗車].freeze
   SORTS = {
     "new" => "新着順",
+    "popular" => "人気順",
     "cost" => "費用が安い順",
     "time" => "作業時間が短い順"
   }.freeze
@@ -11,6 +12,8 @@ class Maintenance < ApplicationRecord
   has_many :steps, -> { order(:position) }, class_name: "MaintenanceStep", dependent: :destroy
   has_many :tools, class_name: "MaintenanceTool", dependent: :destroy
   has_many_attached :images
+  has_many :comments, -> { order(:created_at) }, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   enum :work_difficulty, { easy: 0, normal: 1, hard: 2 }, prefix: :difficulty
   enum :status, { draft: 0, published: 1 }, default: :draft
@@ -42,6 +45,7 @@ class Maintenance < ApplicationRecord
   # 並び替え（値が入っていない記録は後ろに回す）
   scope :sorted, ->(key) {
     case key
+    when "popular" then order(favorites_count: :desc, created_at: :desc)
     when "cost" then order(Arel.sql("maintenances.work_cost IS NULL, maintenances.work_cost ASC"))
     when "time" then order(Arel.sql("maintenances.work_time_minutes IS NULL, maintenances.work_time_minutes ASC"))
     else latest
@@ -50,6 +54,10 @@ class Maintenance < ApplicationRecord
 
   
   validate :car_must_belong_to_user
+
+  def favorited_by?(user)
+    user.present? && favorites.exists?(user_id: user.id)
+  end
 
   private
 

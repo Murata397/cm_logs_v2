@@ -22,6 +22,7 @@
           <span>作業日 <time datetime="<%= @maintenance.maintenance_day %>"><%= l @maintenance.maintenance_day %></time></span>
           <span><%= @maintenance.car.manufacturer_name %> <%= @maintenance.car.car_name %>（<%= @maintenance.car.car_model %>）</span>
         </p>
+        <%= render "favorites/button", maintenance: @maintenance %>
         <% if user_signed_in? && @maintenance.user_id == current_user.id %>
           <div class="p-maintenance__owner-actions">
             <%= link_to "編集", edit_maintenance_path(@maintenance), class: "c-button c-button--outline" %>
@@ -100,6 +101,22 @@
           <p><%= @maintenance.related_information %></p>
         </section>
       <% end %>
+
+      <section class="p-maintenance__section p-comments">
+        <h2 class="p-maintenance__heading">コメント（<span id="comments_count"><%= @maintenance.comments.size %></span>）</h2>
+
+        <ul id="comments" class="p-comments__list">
+          <%= render @maintenance.comments %>
+        </ul>
+
+        <% if can_post? %>
+          <%= render "comments/form", maintenance: @maintenance, comment: Comment.new %>
+        <% elsif user_signed_in? %>
+          <p class="p-comments__note">ゲストユーザーはコメントできません。</p>
+        <% else %>
+          <p class="p-comments__note"><%= link_to "ログイン", new_user_session_path %>するとコメントできます。</p>
+        <% end %>
+      </section>
     </article>
 
     <aside class="p-maintenance__side">

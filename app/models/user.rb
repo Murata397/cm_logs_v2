@@ -5,6 +5,9 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   has_many :cars, dependent: :destroy
   has_many :maintenances, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_maintenances, through: :favorites, source: :maintenance
 
   validates :name, presence: true, length: { maximum: 30 }
 

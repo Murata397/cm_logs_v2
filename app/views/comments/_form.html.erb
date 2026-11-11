@@ -1,0 +1,10 @@
+<div id="comment_form">
+  <%= form_with model: [maintenance, comment], class: "p-comments__form" do |f| %>
+    <% if comment.errors.any? %>
+      <p class="p-comments__error" role="alert"><%= comment.errors.full_messages.first %></p>
+    <% end %>
+    <%= f.label :body, "コメントを書く", class: "u-visually-hidden" %>
+    <%= f.text_area :body, rows: 2, placeholder: "質問や感想を書いてみましょう", class: "c-form__input c-form__textarea" %>
+    <%= f.submit "送信", class: "c-button c-button--primary" %>
+  <% end %>
+</div>

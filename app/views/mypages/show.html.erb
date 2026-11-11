@@ -100,4 +100,22 @@
       <p class="p-mypage__empty">まだ整備記録を投稿していません。</p>
     <% end %>
   </section>
+
+  <section class="p-mypage__section">
+    <h2 class="p-mypage__title">お気に入り</h2>
+    <% if @favorites.any? %>
+      <ul class="p-mypage__posts">
+        <% @favorites.each do |m| %>
+          <li class="p-mypage__post">
+            <div>
+              <%= link_to m.title, maintenance_path(m), class: "p-mypage__post-title" %>
+              <p class="p-mypage__post-sub"><%= m.category %> ／ <%= m.car.car_name %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="p-mypage__empty">お気に入りした整備記録はまだありません。</p>
+    <% end %>
+  </section>
 </div>

@@ -22,7 +22,7 @@ class MaintenancesController < ApplicationController
 
   def show
     @maintenance = Maintenance.visible
-                              .includes(:user, :car, :tools, steps: { image_attachment: :blob })
+                              .includes(:user, :car, :tools, comments: :user, steps: { image_attachment: :blob })
                               .find(params[:id])
 
     @related = Maintenance.visible

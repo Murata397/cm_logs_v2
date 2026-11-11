@@ -9,7 +9,10 @@ Rails.application.routes.draw do
 
   root "homes#top"
   resource :mypage, only: [:show]
-  resources :maintenances
+  resources :maintenances do
+    resources :comments, only: [:create, :destroy]
+    resource :favorite, only: [:create, :destroy]
+  end
   resources :cars, except: [:show] do
     resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]
     resources :fuel_logs, only: [:new, :create, :destroy]

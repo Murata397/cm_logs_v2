@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_10_142535) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_130535) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -49,6 +49,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_10_142535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_cars_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "maintenance_id", null: false
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["maintenance_id"], name: "index_comments_on_maintenance_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "maintenance_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["maintenance_id"], name: "index_favorites_on_maintenance_id"
+    t.index ["user_id", "maintenance_id"], name: "index_favorites_on_user_id_and_maintenance_id", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "fuel_logs", force: :cascade do |t|
@@ -106,6 +126,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_10_142535) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "favorites_count", default: 0, null: false
     t.index ["car_id"], name: "index_maintenances_on_car_id"
     t.index ["user_id"], name: "index_maintenances_on_user_id"
   end
@@ -128,6 +149,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_10_142535) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cars", "users"
+  add_foreign_key "comments", "maintenances"
+  add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "maintenances"
+  add_foreign_key "favorites", "users"
   add_foreign_key "fuel_logs", "cars"
   add_foreign_key "inspection_schedules", "cars"
   add_foreign_key "maintenance_steps", "maintenances"
