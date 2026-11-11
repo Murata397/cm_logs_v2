@@ -9,7 +9,10 @@ Rails.application.routes.draw do
 
   root "homes#top"
   resources :maintenances
-  resources :cars, except: [:show]
+  resources :cars, except: [:show] do
+    resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]
+    resources :fuel_logs, only: [:new, :create, :destroy]
+  end
 
   # サーバーが動いているか確認するためのURL（Rails 8の標準）
   get "up" => "rails/health#show", as: :rails_health_check

@@ -3,6 +3,8 @@ ja:
     models:
       car: 車
       maintenance: 整備記録
+      inspection_schedule: 点検の予定
+      fuel_log: 給油の記録
       maintenance_step: 作業手順
       maintenance_tool: 使った工具
     attributes:
@@ -16,6 +18,16 @@ ja:
         odometer: 走行距離（km）
         purpose: 主な用途
         image: 車の写真
+      inspection_schedule:
+        item: 点検・整備の内容
+        next_due_on: 次回の予定日
+        next_due_odometer: 次回の走行距離（km）
+      fuel_log:
+        refueled_on: 給油日
+        odometer: 給油時の走行距離（km）
+        trip_distance: 前回の給油からの走行距離（km）
+        fuel_amount: 給油量（L）
+        fuel_type: 燃料の種類
       maintenance:
         user: ユーザー
         title: タイトル

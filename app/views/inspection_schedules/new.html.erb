@@ -1,0 +1,9 @@
+<% content_for :title, "点検の予定を登録 | CM Logs" %>
+
+<section class="p-form-page">
+  <div class="p-form-page__card">
+    <h1 class="p-form-page__title">点検の予定を登録</h1>
+    <p class="p-form-page__sub"><%= @car.car_name %></p>
+    <%= render "form", car: @car, schedule: @schedule %>
+  </div>
+</section>

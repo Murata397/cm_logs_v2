@@ -4,7 +4,10 @@ class CarsController < ApplicationController
   before_action :set_car, only: [:edit, :update, :destroy]
 
   def index
-    @cars = current_user.cars.with_attached_image.order(:created_at)
+    @cars = current_user.cars
+                        .with_attached_image
+                        .includes(:inspection_schedules, :fuel_logs)
+                        .order(:created_at)
   end
 
   def new

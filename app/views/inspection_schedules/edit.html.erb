@@ -1,0 +1,13 @@
+<% content_for :title, "点検の予定を編集 | CM Logs" %>
+
+<section class="p-form-page">
+  <div class="p-form-page__card">
+    <h1 class="p-form-page__title">点検の予定を編集</h1>
+    <p class="p-form-page__sub"><%= @car.car_name %></p>
+    <%= render "form", car: @car, schedule: @schedule %>
+
+    <%= button_to "この予定を削除", car_inspection_schedule_path(@car, @schedule), method: :delete,
+          class: "c-button c-button--outline c-button--block p-form-page__delete",
+          form: { data: { turbo_confirm: "この点検の予定を削除しますか？" } } %>
+  </div>
+</section>

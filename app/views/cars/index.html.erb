@@ -23,6 +23,27 @@
             <% if car.odometer.present? %>
               <p class="p-cars__spec">走行距離 <%= number_with_delimiter(car.odometer) %> km</p>
             <% end %>
+
+            <% if (inspection = car.next_inspection) %>
+              <div class="p-cars__next">
+                <p class="p-cars__next-label">次の点検</p>
+                <p class="p-cars__next-item">
+                  <%= inspection.item %>
+                  <span class="c-badge <%= 'c-badge--notice' if inspection.days_left <= 14 %>">あと<%= inspection.days_left %>日</span>
+                </p>
+                <p class="p-cars__next-date"><%= l inspection.next_due_on %> 予定</p>
+                <%= link_to "編集", edit_car_inspection_schedule_path(car, inspection), class: "p-cars__next-edit" %>
+              </div>
+            <% end %>
+
+            <% if (fuel = car.latest_fuel_log) %>
+              <p class="p-cars__spec">最新の燃費 <strong><%= fuel.efficiency %> km/L</strong>（<%= l fuel.refueled_on %>）</p>
+            <% end %>
+
+            <div class="p-cars__links">
+              <%= link_to "＋ 点検の予定", new_car_inspection_schedule_path(car) %>
+              <%= link_to "＋ 給油を記録", new_car_fuel_log_path(car) %>
+            </div>
             <div class="p-cars__actions">
               <%= link_to "編集", edit_car_path(car), class: "c-button c-button--outline" %>
               <%= button_to "削除", car_path(car), method: :delete,

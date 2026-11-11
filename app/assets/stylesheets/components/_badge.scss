@@ -13,4 +13,11 @@
     background: var(--color-primary);
     border-color: var(--color-primary);
   }
+
+  &--notice {
+    font-weight: 700;
+    color: var(--color-notice-text);
+    background: var(--color-notice-bg);
+    border-color: var(--color-notice-bg);
+  }
 }

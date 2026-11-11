@@ -10,6 +10,13 @@ class Car < ApplicationRecord
 
   # 今日以降で一番近い点検の予定
   def next_inspection
-    inspection_schedules.where("next_due_on >= ?", Date.current).order(:next_due_on).first
+    inspection_schedules
+      .select { |s| s.next_due_on.present? && s.next_due_on >= Date.current }
+      .min_by(&:next_due_on)
+  end
+
+  # 一番新しい給油の記録
+  def latest_fuel_log
+    fuel_logs.max_by(&:refueled_on)
   end
 end
