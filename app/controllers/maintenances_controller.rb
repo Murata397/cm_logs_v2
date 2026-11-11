@@ -66,7 +66,7 @@ class MaintenancesController < ApplicationController
   end
 
   def destroy
-    @maintenance.update!(deleted_at: Time.current)
+    @maintenance.soft_delete!
     redirect_to maintenances_path, notice: "整備記録を削除しました", status: :see_other
   end
 

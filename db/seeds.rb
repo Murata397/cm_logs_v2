@@ -109,4 +109,12 @@ Group.find_or_create_by!(name: "洗車・コーティング研究会", owner: de
   g.introduction = "手洗い洗車やコーティングのやり方、おすすめの道具を紹介し合うグループです。"
 end
 
+# 管理者（本番では ADMIN_EMAIL・ADMIN_PASSWORD を必ず設定する）
+Admin.find_or_create_by!(email: ENV.fetch("ADMIN_EMAIL", "admin@example.com")) do |admin|
+  admin.password = ENV.fetch("ADMIN_PASSWORD") do
+    raise "本番では ADMIN_PASSWORD を設定してください" if Rails.env.production?
+    "password"
+  end
+end
+
 puts "完了しました"

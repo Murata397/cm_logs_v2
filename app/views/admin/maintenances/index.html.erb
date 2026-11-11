@@ -1,0 +1,35 @@
+<% content_for :title, "整備記録 | 管理画面" %>
+
+<h1 class="p-admin__title">整備記録</h1>
+<%= render "admin/shared/toolbar", kept_label: "表示中", deleted_label: "削除済み", placeholder: "タイトル" %>
+
+<div class="p-admin__table-wrap">
+  <table class="p-admin__table">
+    <thead>
+      <tr><th scope="col">ID</th><th scope="col">タイトル</th><th scope="col">投稿者</th><th scope="col">状態</th><th scope="col">投稿日</th><th scope="col"><span class="u-visually-hidden">操作</span></th></tr>
+    </thead>
+    <tbody>
+      <% @records.each do |m| %>
+        <tr>
+          <td><%= m.id %></td>
+          <th scope="row">
+            <% if !m.deleted? && m.published? %>
+              <%= link_to m.title, maintenance_path(m), target: "_blank", rel: "noopener" %>
+            <% else %>
+              <%= m.title %>
+            <% end %>
+          </th>
+          <td><%= link_to m.user.name, admin_user_path(m.user) %></td>
+          <td><%= m.published? ? "公開" : "下書き" %></td>
+          <td><%= l m.created_at.to_date %></td>
+          <td class="p-admin__actions">
+            <%= render "admin/shared/row_actions", record: m, delete_label: "削除",
+                  delete_path: admin_maintenance_path(m), restore_path: restore_admin_maintenance_path(m),
+                  confirm: "「#{m.title}」を削除しますか？（あとで復元できます）" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @records.empty? %><p class="p-admin__empty">該当する整備記録はありません。</p><% end %>
+</div>

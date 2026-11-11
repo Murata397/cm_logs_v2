@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  # 管理者のログイン（/admin/sign_in）。新規登録とパスワード再設定の画面は作らない
+  devise_for :admins, path: "admin", skip: [:registrations, :passwords],
+                      controllers: { sessions: "admin/sessions" }
+
+  namespace :admin do
+    root "dashboards#show"
+    resources :users, only: [:index, :show, :destroy] do
+      patch :restore, on: :member
+    end
+    resources :maintenances, only: [:index, :destroy] do
+      patch :restore, on: :member
+    end
+    resources :groups, only: [:index, :destroy] do
+      patch :restore, on: :member
+    end
+    resources :comments, only: [:index, :destroy] do
+      patch :restore, on: :member
+    end
+  end
+
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations"

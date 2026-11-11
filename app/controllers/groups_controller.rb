@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
 
   # 整備記録と同じく、消さずに「削除した印」をつける（管理画面から戻せるように）
   def destroy
-    @group.update!(deleted_at: Time.current)
+    @group.soft_delete!
     redirect_to groups_path, notice: "グループを削除しました", status: :see_other
   end
 

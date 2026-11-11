@@ -1,0 +1,33 @@
+<% content_for :title, "ユーザー | 管理画面" %>
+
+<h1 class="p-admin__title">ユーザー</h1>
+<%= render "admin/shared/toolbar", kept_label: "利用中", deleted_label: "退会済み", placeholder: "名前・メールアドレス" %>
+
+<div class="p-admin__table-wrap">
+  <table class="p-admin__table">
+    <thead>
+      <tr><th scope="col">ID</th><th scope="col">名前</th><th scope="col">メールアドレス</th><th scope="col">登録日</th><th scope="col"><span class="u-visually-hidden">操作</span></th></tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <th scope="row">
+            <%= link_to user.name, admin_user_path(user) %>
+            <% if user.guest? %><span class="c-badge">ゲスト</span><% end %>
+          </th>
+          <td><%= user.email %></td>
+          <td><%= l user.created_at.to_date %></td>
+          <td class="p-admin__actions">
+            <% unless user.guest? %>
+              <%= render "admin/shared/row_actions", record: user, delete_label: "退会させる",
+                    delete_path: admin_user_path(user), restore_path: restore_admin_user_path(user),
+                    confirm: "#{user.name}さんを退会させますか？（あとで復元できます）" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @users.empty? %><p class="p-admin__empty">該当するユーザーはいません。</p><% end %>
+</div>

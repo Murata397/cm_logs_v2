@@ -1,0 +1,36 @@
+<% content_for :title, "ダッシュボード | 管理画面" %>
+
+<h1 class="p-admin__title">ダッシュボード</h1>
+
+<dl class="p-admin__stats">
+  <div><dt>ユーザー</dt><dd><%= @counts[:users] %></dd><span>退会済み <%= @counts[:deleted_users] %></span></div>
+  <div><dt>公開中の整備記録</dt><dd><%= @counts[:maintenances] %></dd><span>下書き <%= @counts[:drafts] %></span></div>
+  <div><dt>グループ</dt><dd><%= @counts[:groups] %></dd></div>
+  <div><dt>コメント</dt><dd><%= @counts[:comments] %></dd></div>
+</dl>
+
+<div class="p-admin__columns">
+  <section class="p-admin__panel">
+    <h2 class="p-admin__subtitle">新しいユーザー</h2>
+    <ul class="p-admin__list">
+      <% @recent_users.each do |user| %>
+        <li>
+          <%= link_to user.name, admin_user_path(user) %>
+          <span><%= l user.created_at, format: :short %><%= "（退会済み）" if user.deleted? %></span>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="p-admin__panel">
+    <h2 class="p-admin__subtitle">新しい整備記録</h2>
+    <ul class="p-admin__list">
+      <% @recent_maintenances.each do |m| %>
+        <li>
+          <span class="p-admin__ellipsis"><%= m.title %></span>
+          <span><%= m.user.name %> ／ <%= m.deleted? ? "削除済み" : (m.published? ? "公開" : "下書き") %></span>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+</div>

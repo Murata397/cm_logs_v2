@@ -1,0 +1,29 @@
+<% content_for :title, "コメント | 管理画面" %>
+
+<h1 class="p-admin__title">コメント</h1>
+<%= render "admin/shared/toolbar", kept_label: "表示中", deleted_label: "削除済み", placeholder: "コメントの内容" %>
+
+<div class="p-admin__table-wrap">
+  <table class="p-admin__table">
+    <thead>
+      <tr><th scope="col">ID</th><th scope="col">コメント</th><th scope="col">書いた人</th><th scope="col">整備記録</th><th scope="col">日時</th><th scope="col"><span class="u-visually-hidden">操作</span></th></tr>
+    </thead>
+    <tbody>
+      <% @records.each do |c| %>
+        <tr>
+          <td><%= c.id %></td>
+          <th scope="row" class="p-admin__comment"><%= c.body %></th>
+          <td><%= link_to c.user.name, admin_user_path(c.user) %></td>
+          <td><%= link_to c.maintenance.title, maintenance_path(c.maintenance), target: "_blank", rel: "noopener" %></td>
+          <td><%= l c.created_at, format: :short %></td>
+          <td class="p-admin__actions">
+            <%= render "admin/shared/row_actions", record: c, delete_label: "削除",
+                  delete_path: admin_comment_path(c), restore_path: restore_admin_comment_path(c),
+                  confirm: "このコメントを削除しますか？（あとで復元できます）" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @records.empty? %><p class="p-admin__empty">該当するコメントはありません。</p><% end %>
+</div>

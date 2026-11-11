@@ -1,0 +1,13 @@
+<%# 「表示中／削除済み」の切り替えと検索 %>
+<div class="p-admin__toolbar">
+  <nav class="p-admin__tabs" aria-label="表示の切り替え">
+    <%= link_to kept_label, url_for(q: params[:q]), class: ("is-current" unless showing_deleted?), aria: { current: (showing_deleted? ? nil : "page") } %>
+    <%= link_to deleted_label, url_for(status: "deleted", q: params[:q]), class: ("is-current" if showing_deleted?), aria: { current: (showing_deleted? ? "page" : nil) } %>
+  </nav>
+  <%= form_with url: url_for, method: :get, class: "p-admin__search", role: "search" do |f| %>
+    <%= f.hidden_field :status, value: params[:status] if showing_deleted? %>
+    <%= f.label :q, "検索", class: "u-visually-hidden" %>
+    <%= f.search_field :q, value: params[:q], placeholder: placeholder, class: "c-form__input" %>
+    <%= f.submit "検索", name: nil, class: "c-button c-button--outline" %>
+  <% end %>
+</div>

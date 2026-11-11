@@ -1,4 +1,6 @@
 class Maintenance < ApplicationRecord
+  include SoftDeletable
+
   CATEGORIES = %w[日常点検 法定点検 メンテナンス チューニング 洗車].freeze
   SORTS = {
     "new" => "新着順",
@@ -12,7 +14,7 @@ class Maintenance < ApplicationRecord
   has_many :steps, -> { order(:position) }, class_name: "MaintenanceStep", dependent: :destroy
   has_many :tools, class_name: "MaintenanceTool", dependent: :destroy
   has_many_attached :images
-  has_many :comments, -> { order(:created_at) }, dependent: :destroy
+  has_many :comments, -> { visible.order(:created_at) }, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
   enum :work_difficulty, { easy: 0, normal: 1, hard: 2 }, prefix: :difficulty
@@ -29,7 +31,7 @@ class Maintenance < ApplicationRecord
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
   # 公開中で、削除されていない記録だけ
-  scope :visible, -> { published.where(deleted_at: nil) }
+  scope :visible, -> { published.kept.where(user_id: User.active.select(:id)) }
   scope :latest, -> { order(created_at: :desc) }
 
   # 検索・絞り込み（条件が空のときは何もしない）

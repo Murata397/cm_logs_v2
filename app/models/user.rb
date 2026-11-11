@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include ImageValidatable
+  include SoftDeletable
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -34,5 +35,14 @@ class User < ApplicationRecord
 
   def guest?
     email == GUEST_EMAIL
+  end
+
+  # 退会した人はログインできないようにする（Deviseが毎回確認する）
+  def active_for_authentication?
+    super && !deleted?
+  end
+
+  def inactive_message
+    deleted? ? :deleted_account : super
   end
 end

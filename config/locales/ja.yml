@@ -70,3 +70,6 @@ ja:
         title: 作業手順の「やること」
       maintenance/tools:
         name: 工具名
+  devise:
+    failure:
+      deleted_account: 退会済みのアカウントです。

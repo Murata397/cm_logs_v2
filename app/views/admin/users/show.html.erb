@@ -1,0 +1,53 @@
+<% content_for :title, "#{@user.name} | 管理画面" %>
+
+<p class="p-admin__back"><%= link_to "← ユーザー一覧", admin_users_path %></p>
+<div class="p-admin__heading">
+  <h1 class="p-admin__title"><%= @user.name %></h1>
+  <% if @user.deleted? %><span class="c-badge c-badge--notice">退会済み</span><% end %>
+  <% if @user.guest? %><span class="c-badge">ゲスト</span><% end %>
+</div>
+
+<dl class="p-admin__detail">
+  <div><dt>メールアドレス</dt><dd><%= @user.email %></dd></div>
+  <div><dt>登録日</dt><dd><%= l @user.created_at, format: :short %></dd></div>
+  <div><dt>退会日</dt><dd><%= @user.deleted_at ? l(@user.deleted_at, format: :short) : "—" %></dd></div>
+  <div><dt>自己紹介</dt><dd><%= @user.introduction.presence || "—" %></dd></div>
+</dl>
+
+<div class="p-admin__heading-actions">
+  <% unless @user.guest? %>
+    <%= render "admin/shared/row_actions", record: @user, delete_label: "退会させる",
+          delete_path: admin_user_path(@user), restore_path: restore_admin_user_path(@user),
+          confirm: "#{@user.name}さんを退会させますか？（あとで復元できます）" %>
+  <% end %>
+  <% unless @user.deleted? %>
+    <%= link_to "公開ページを見る", user_path(@user), target: "_blank", rel: "noopener", class: "c-button c-button--outline" %>
+  <% end %>
+</div>
+
+<section class="p-admin__panel">
+  <h2 class="p-admin__subtitle">整備記録（<%= @maintenances.size %>件）</h2>
+  <ul class="p-admin__list">
+    <% @maintenances.each do |m| %>
+      <li><span class="p-admin__ellipsis"><%= m.title %></span><span><%= m.deleted? ? "削除済み" : (m.published? ? "公開" : "下書き") %> ／ <%= l m.created_at.to_date %></span></li>
+    <% end %>
+  </ul>
+</section>
+
+<section class="p-admin__panel">
+  <h2 class="p-admin__subtitle">オーナーのグループ（<%= @groups.size %>件）</h2>
+  <ul class="p-admin__list">
+    <% @groups.each do |g| %>
+      <li><span><%= g.name %></span><span><%= g.deleted? ? "削除済み" : "公開中" %></span></li>
+    <% end %>
+  </ul>
+</section>
+
+<section class="p-admin__panel">
+  <h2 class="p-admin__subtitle">最近のコメント</h2>
+  <ul class="p-admin__list">
+    <% @comments.each do |c| %>
+      <li><span class="p-admin__ellipsis"><%= c.body %></span><span><%= c.deleted? ? "削除済み" : c.maintenance.title %></span></li>
+    <% end %>
+  </ul>
+</section>

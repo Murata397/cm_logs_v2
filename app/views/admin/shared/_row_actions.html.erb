@@ -1,0 +1,8 @@
+<%# 1行分の「削除」「復元」ボタン %>
+<% if record.deleted? %>
+  <%= button_to "復元", restore_path, method: :patch, class: "c-button c-button--outline p-admin__small-button" %>
+<% else %>
+  <%= button_to delete_label, delete_path, method: :delete,
+        class: "c-button c-button--outline p-admin__small-button p-admin__danger",
+        form: { data: { turbo_confirm: confirm } } %>
+<% end %>

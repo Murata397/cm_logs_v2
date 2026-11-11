@@ -34,7 +34,7 @@
 
     <div class="p-form-page__danger">
       <h2 class="p-form-page__danger-title">退会する</h2>
-      <p>退会すると、投稿した整備記録・マイカー・コメントもすべて削除されます。</p>
+      <p>退会すると、投稿した整備記録・コメント・グループはサイトに表示されなくなり、このアカウントではログインできなくなります。</p>
       <%= button_to "退会する", registration_path(resource_name), method: :delete,
             class: "c-button c-button--outline",
             form: { data: { turbo_confirm: "本当に退会しますか？この操作は取り消せません。" } } %>

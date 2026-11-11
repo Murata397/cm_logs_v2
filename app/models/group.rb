@@ -1,12 +1,13 @@
 class Group < ApplicationRecord
   include ImageValidatable
+  include SoftDeletable
 
   belongs_to :owner, class_name: "User"
   has_one_attached :image
   has_many :group_users, dependent: :destroy
-  has_many :member_group_users, -> { approved }, class_name: "GroupUser"
+  has_many :member_group_users, -> { approved.where(user_id: User.active.select(:id)) }, class_name: "GroupUser"
   has_many :members, through: :member_group_users, source: :user
-  has_many :pending_group_users, -> { pending }, class_name: "GroupUser"
+  has_many :pending_group_users, -> { pending.where(user_id: User.active.select(:id)) }, class_name: "GroupUser"
   has_many :notices, -> { order(created_at: :desc) }, class_name: "GroupNotice", dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 30 }
@@ -18,7 +19,7 @@ class Group < ApplicationRecord
   # 作った人は、最初からメンバーにする
   after_create { group_users.create!(user: owner, status: :approved) }
 
-  scope :active, -> { where(deleted_at: nil) }
+  scope :active, -> { kept.where(owner_id: User.active.select(:id)) }
   scope :latest, -> { order(created_at: :desc) }
   scope :keyword, ->(q) {
     where("groups.name LIKE :q OR groups.introduction LIKE :q OR groups.theme LIKE :q", q: "%#{sanitize_sql_like(q)}%") if q.present?
