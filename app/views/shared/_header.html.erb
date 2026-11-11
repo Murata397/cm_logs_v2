@@ -16,7 +16,7 @@
         <li><%= link_to "整備記録", maintenances_path %></li>
         <li><%= link_to "グループ", "#" %></li>
         <% if user_signed_in? %>
-          <li><%= link_to "マイカー", "#" %></li>
+          <li><%= link_to "マイカー", cars_path %></li>
           <li><%= link_to "マイページ", "#" %></li>
         <% end %>
       </ul>

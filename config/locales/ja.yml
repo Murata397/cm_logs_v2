@@ -1,6 +1,16 @@
 ja:
   activerecord:
+    models:
+      car: 車
+      maintenance: 整備記録
     attributes:
       user:
         name: 名前
         introduction: 自己紹介
+      car:
+        car_name: 車名
+        manufacturer_name: メーカー
+        car_model: 型式
+        odometer: 走行距離（km）
+        purpose: 主な用途
+        image: 車の写真

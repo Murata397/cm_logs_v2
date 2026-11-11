@@ -1,0 +1,23 @@
+@use "../foundation/mixins" as *;
+
+.p-form-page {
+  padding: 40px 16px 80px;
+
+  &__card {
+    width: min(100%, 640px);
+    margin-inline: auto;
+    padding: 32px 24px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+
+    @include tab {
+      padding: 40px;
+    }
+  }
+
+  &__title {
+    margin: 0 0 24px;
+    font-size: 1.5rem;
+  }
+}

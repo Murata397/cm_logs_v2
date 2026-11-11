@@ -724,3 +724,105 @@ a {
   font-size: 0.75rem;
   color: var(--color-text-sub);
 }
+
+.p-form-page {
+  padding: 40px 16px 80px;
+}
+.p-form-page__card {
+  width: min(100%, 640px);
+  margin-inline: auto;
+  padding: 32px 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+@media (min-width: 768px) {
+  .p-form-page__card {
+    padding: 40px;
+  }
+}
+.p-form-page__title {
+  margin: 0 0 24px;
+  font-size: 1.5rem;
+}
+
+.p-cars {
+  padding: 40px 0 80px;
+}
+.p-cars__head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.p-cars__title {
+  margin: 0;
+  font-size: 2rem;
+}
+.p-cars__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.p-cars__item {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+.p-cars__image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16/10;
+  background: var(--color-surface);
+}
+.p-cars__image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.p-cars__no-image {
+  font-family: var(--font-en);
+  letter-spacing: 0.1em;
+  color: var(--color-text-sub);
+}
+.p-cars__body {
+  display: grid;
+  gap: 6px;
+  padding: 20px;
+}
+.p-cars__name {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.p-cars__spec {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-sub);
+}
+.p-cars__actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.p-cars__empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--color-text-sub);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius);
+}

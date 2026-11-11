@@ -1,0 +1,84 @@
+@use "../foundation/mixins" as *;
+
+.p-cars {
+  padding: 40px 0 80px;
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  &__image {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    background: var(--color-surface);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__no-image {
+    font-family: var(--font-en);
+    letter-spacing: 0.1em;
+    color: var(--color-text-sub);
+  }
+
+  &__body {
+    display: grid;
+    gap: 6px;
+    padding: 20px;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  &__spec {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-text-sub);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  &__empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--color-text-sub);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius);
+  }
+}
