@@ -4,8 +4,20 @@ class MaintenancesController < ApplicationController
   before_action :set_own_maintenance, only: [:edit, :update, :destroy]
 
   def index
-    @maintenances = Maintenance.visible.latest.includes(:user, :car, images_attachments: :blob)
-    @maintenances = @maintenances.where(category: params[:category]) if params[:category].present?
+    # 絞り込みのメーカーの選択肢（公開中の記録がある車のメーカーだけ）
+    @makers = Car.joins(:maintenances)
+                 .merge(Maintenance.visible)
+                 .distinct
+                 .order(:manufacturer_name)
+                 .pluck(:manufacturer_name)
+
+    @maintenances = Maintenance.visible
+                               .keyword(params[:q])
+                               .by_category(params[:category])
+                               .by_difficulty(params[:difficulty])
+                               .by_maker(params[:maker])
+                               .sorted(params[:sort])
+                               .includes(:user, :car, images_attachments: :blob)
   end
 
   def show

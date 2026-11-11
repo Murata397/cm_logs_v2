@@ -1,5 +1,10 @@
 class Maintenance < ApplicationRecord
   CATEGORIES = %w[日常点検 法定点検 メンテナンス チューニング 洗車].freeze
+  SORTS = {
+    "new" => "新着順",
+    "cost" => "費用が安い順",
+    "time" => "作業時間が短い順"
+  }.freeze
 
   belongs_to :user
   belongs_to :car
@@ -23,6 +28,25 @@ class Maintenance < ApplicationRecord
   # 公開中で、削除されていない記録だけ
   scope :visible, -> { published.where(deleted_at: nil) }
   scope :latest, -> { order(created_at: :desc) }
+
+  # 検索・絞り込み（条件が空のときは何もしない）
+  scope :keyword, ->(q) {
+    where("maintenances.title LIKE :q OR maintenances.summary LIKE :q", q: "%#{sanitize_sql_like(q)}%") if q.present?
+  }
+  scope :by_category, ->(category) { where(category: category) if category.present? }
+  scope :by_difficulty, ->(difficulty) {
+    where(work_difficulty: difficulty) if difficulty.present? && work_difficulties.key?(difficulty)
+  }
+  scope :by_maker, ->(maker) { joins(:car).where(cars: { manufacturer_name: maker }) if maker.present? }
+
+  # 並び替え（値が入っていない記録は後ろに回す）
+  scope :sorted, ->(key) {
+    case key
+    when "cost" then order(Arel.sql("maintenances.work_cost IS NULL, maintenances.work_cost ASC"))
+    when "time" then order(Arel.sql("maintenances.work_time_minutes IS NULL, maintenances.work_time_minutes ASC"))
+    else latest
+    end
+  }
 
   
   validate :car_must_belong_to_user

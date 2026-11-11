@@ -11,6 +11,15 @@ module MaintenancesHelper
     DIFFICULTY_LABELS.map { |key, label| [label, key] }
   end
 
+  def sort_options
+    Maintenance::SORTS.map { |key, label| [label, key] }
+  end
+
+  # 何か条件が指定されているか
+  def filtered?
+    params.values_at(:q, :category, :difficulty, :maker).any?(&:present?)
+  end
+
   # 分を「1時間30分」のような表示に
   def work_time_label(minutes)
     return "—" if minutes.blank?

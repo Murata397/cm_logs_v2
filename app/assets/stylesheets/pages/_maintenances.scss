@@ -1,3 +1,5 @@
+@use "../foundation/mixins" as *;
+
 .p-maintenances {
   padding: 40px 0 80px;
 
@@ -15,9 +17,71 @@
     color: var(--color-text-sub);
   }
 
+  // PCでは「絞り込み（260px）＋ 結果」の2列
+  &__layout {
+    display: grid;
+    gap: 32px;
+
+    @include pc {
+      grid-template-columns: 260px minmax(0, 1fr);
+      align-items: start;
+    }
+  }
+
+  &__filter {
+    padding: 20px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+
+    @include pc {
+      position: sticky;
+      top: 88px;
+    }
+  }
+
+  // スマホ・タブレットでは入力欄を2列にして、縦に長くなりすぎないようにする
+  &__form {
+    gap: 16px;
+
+    @include tab {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include pc {
+      grid-template-columns: 1fr;
+    }
+
+    .c-form__field:first-child,
+    .c-button,
+    .p-maintenances__clear {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__clear {
+    font-size: 0.875rem;
+    text-align: center;
+    color: var(--color-text-sub);
+  }
+
+  &__count {
+    margin: 0 0 16px;
+    font-size: 0.875rem;
+    color: var(--color-text-sub);
+  }
+
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 24px;
+  }
+
+  &__empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--color-text-sub);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius);
   }
 }

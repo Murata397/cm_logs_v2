@@ -6,11 +6,52 @@
     <p class="p-maintenances__lead">みんなの整備手順から探す</p>
   </header>
 
-  <% if @maintenances.any? %>
-    <div class="p-maintenances__grid">
-      <%= render @maintenances %>
+  <div class="p-maintenances__layout">
+    <aside class="p-maintenances__filter" aria-label="絞り込み">
+      <%= form_with url: maintenances_path, method: :get, class: "c-form p-maintenances__form" do |f| %>
+        <div class="c-form__field">
+          <%= f.label :q, "キーワード", class: "c-form__label" %>
+          <%= f.search_field :q, value: params[:q], placeholder: "例：オイル交換", class: "c-form__input" %>
+        </div>
+
+        <div class="c-form__field">
+          <%= f.label :category, "カテゴリ", class: "c-form__label" %>
+          <%= f.select :category, Maintenance::CATEGORIES, { include_blank: "すべて", selected: params[:category] }, class: "c-form__input" %>
+        </div>
+
+        <div class="c-form__field">
+          <%= f.label :difficulty, "難易度", class: "c-form__label" %>
+          <%= f.select :difficulty, difficulty_options, { include_blank: "すべて", selected: params[:difficulty] }, class: "c-form__input" %>
+        </div>
+
+        <div class="c-form__field">
+          <%= f.label :maker, "メーカー", class: "c-form__label" %>
+          <%= f.select :maker, @makers, { include_blank: "すべて", selected: params[:maker] }, class: "c-form__input" %>
+        </div>
+
+        <div class="c-form__field">
+          <%= f.label :sort, "並び替え", class: "c-form__label" %>
+          <%= f.select :sort, sort_options, { selected: params[:sort] }, class: "c-form__input" %>
+        </div>
+
+        <%= f.submit "この条件で探す", name: nil, class: "c-button c-button--primary c-button--block" %>
+
+        <% if filtered? %>
+          <%= link_to "条件をクリア", maintenances_path, class: "p-maintenances__clear" %>
+        <% end %>
+      <% end %>
+    </aside>
+
+    <div class="p-maintenances__results">
+      <p class="p-maintenances__count"><%= @maintenances.size %>件の整備記録</p>
+
+      <% if @maintenances.any? %>
+        <div class="p-maintenances__grid">
+          <%= render @maintenances %>
+        </div>
+      <% else %>
+        <p class="p-maintenances__empty">条件に合う整備記録が見つかりませんでした。</p>
+      <% end %>
     </div>
-  <% else %>
-    <p>まだ整備記録がありません。</p>
-  <% end %>
+  </div>
 </section>
