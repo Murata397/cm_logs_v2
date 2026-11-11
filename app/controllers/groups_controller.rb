@@ -16,6 +16,8 @@ class GroupsController < ApplicationController
     @members = @group.member_group_users.includes(:user).order(:created_at)
     @status = @group.status_for(current_user)
     @pending = @group.pending_group_users.includes(:user).order(:created_at) if @group.owned_by?(current_user)
+    # お知らせはメンバーだけが見られる
+    @notices = @group.notices.includes(:user).limit(5) if @status == "approved"
   end
 
   def new

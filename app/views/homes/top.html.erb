@@ -89,6 +89,8 @@
     <p class="p-top-cta__text">あなたの整備記録が、誰かの助けになる。</p>
     <% if can_post? %>
       <%= link_to "＋ 記録を投稿する", new_maintenance_path, class: "c-button c-button--primary c-button--lg" %>
+    <% elsif user_signed_in? %>
+      <%= button_to "新規登録して始める", users_guest_to_sign_up_path, method: :delete, class: "c-button c-button--primary c-button--lg" %>
     <% else %>
       <%= link_to "無料で始める", new_user_registration_path, class: "c-button c-button--primary c-button--lg" %>
     <% end %>

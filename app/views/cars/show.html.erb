@@ -11,7 +11,7 @@
     </div>
 
     <div class="p-car__info">
-      <h1 class="p-car__name"><%= @car.car_name %></h1>
+      <h1 class="p-car__name"><%= @car.car_name %> <%= sample_badge(@car.user) %></h1>
       <p class="p-car__owner">オーナー：<%= link_to @car.user.name, user_path(@car.user) %></p>
       <dl class="p-car__spec">
         <div><dt>メーカー</dt><dd><%= @car.manufacturer_name %></dd></div>

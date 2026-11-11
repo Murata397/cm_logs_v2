@@ -7,6 +7,7 @@ class Group < ApplicationRecord
   has_many :member_group_users, -> { approved }, class_name: "GroupUser"
   has_many :members, through: :member_group_users, source: :user
   has_many :pending_group_users, -> { pending }, class_name: "GroupUser"
+  has_many :notices, -> { order(created_at: :desc) }, class_name: "GroupNotice", dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 30 }
   validates :introduction, presence: true, length: { maximum: 200 }
@@ -22,6 +23,10 @@ class Group < ApplicationRecord
   scope :keyword, ->(q) {
     where("groups.name LIKE :q OR groups.introduction LIKE :q OR groups.theme LIKE :q", q: "%#{sanitize_sql_like(q)}%") if q.present?
   }
+
+  def member?(user)
+    status_for(user) == "approved"
+  end
 
   def owned_by?(user)
     user.present? && owner_id == user.id

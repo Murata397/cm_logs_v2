@@ -3,7 +3,7 @@
 <section class="l-container p-fuel-logs">
   <header class="p-fuel-logs__head">
     <div>
-      <h1 class="p-fuel-logs__title">給油の履歴</h1>
+      <h1 class="p-fuel-logs__title">給油の履歴 <%= sample_badge(@car.user) %></h1>
       <p class="p-fuel-logs__sub"><%= @car.car_name %>（<%= @car.manufacturer_name %>）</p>
     </div>
     <% if can_post? %>

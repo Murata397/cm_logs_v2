@@ -1,0 +1,13 @@
+<p><%= @recipient.name %>さん</p>
+
+<p>参加しているグループ「<%= @group.name %>」から、お知らせが届きました。</p>
+
+<h1 style="font-size: 18px;"><%= @notice.title %></h1>
+<p style="white-space: pre-wrap;"><%= @notice.body %></p>
+
+<p style="color: #5b6472; font-size: 13px;">送信者：<%= @notice.user.name %>（グループのオーナー）</p>
+
+<p><%= link_to "グループのページを開く", group_url(@group) %></p>
+
+<hr>
+<p style="color: #5b6472; font-size: 12px;">このメールは CM Logs から自動で送信しています。グループから退出すると、お知らせは届かなくなります。</p>

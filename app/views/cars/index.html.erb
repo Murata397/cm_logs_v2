@@ -3,7 +3,9 @@
 <section class="l-container p-cars">
   <header class="p-cars__head">
     <h1 class="p-cars__title">マイカー</h1>
-    <%= link_to "＋ 車を登録", new_car_path, class: "c-button c-button--primary" %>
+    <% if can_post? %>
+      <%= link_to "＋ 車を登録", new_car_path, class: "c-button c-button--primary" %>
+    <% end %>
   </header>
 
   <% if @cars.any? %>
@@ -18,7 +20,7 @@
             <% end %>
           </div>
           <div class="p-cars__body">
-            <h2 class="p-cars__name"><%= link_to car.car_name, car_path(car) %></h2>
+            <h2 class="p-cars__name"><%= link_to car.car_name, car_path(car) %> <%= sample_badge(car.user) %></h2>
             <p class="p-cars__spec"><%= car.manufacturer_name %> ／ <%= car.car_model %></p>
             <% if car.odometer.present? %>
               <p class="p-cars__spec">走行距離 <%= number_with_delimiter(car.odometer) %> km</p>
@@ -32,7 +34,9 @@
                   <span class="c-badge <%= 'c-badge--notice' if inspection.days_left <= 14 %>">あと<%= inspection.days_left %>日</span>
                 </p>
                 <p class="p-cars__next-date"><%= l inspection.next_due_on %> 予定</p>
-                <%= link_to "編集", edit_car_inspection_schedule_path(car, inspection), class: "p-cars__next-edit" %>
+                <% if can_post? %>
+                  <%= link_to "編集", edit_car_inspection_schedule_path(car, inspection), class: "p-cars__next-edit" %>
+                <% end %>
               </div>
             <% end %>
 
@@ -41,18 +45,22 @@
             <% end %>
 
             <div class="p-cars__links">
-              <%= link_to "＋ 点検の予定", new_car_inspection_schedule_path(car) %>
-              <%= link_to "＋ 給油を記録", new_car_fuel_log_path(car) %>
+              <% if can_post? %>
+                <%= link_to "＋ 点検の予定", new_car_inspection_schedule_path(car) %>
+                <%= link_to "＋ 給油を記録", new_car_fuel_log_path(car) %>
+              <% end %>
               <% if car.fuel_logs.any? %>
                 <%= link_to "給油の履歴", car_fuel_logs_path(car) %>
               <% end %>
             </div>
-            <div class="p-cars__actions">
-              <%= link_to "編集", edit_car_path(car), class: "c-button c-button--outline" %>
-              <%= button_to "削除", car_path(car), method: :delete,
-                    class: "c-button c-button--outline",
-                    form: { data: { turbo_confirm: "#{car.car_name}を削除しますか？この車の整備記録も削除されます。" } } %>
-            </div>
+            <% if can_post? %>
+              <div class="p-cars__actions">
+                <%= link_to "編集", edit_car_path(car), class: "c-button c-button--outline" %>
+                <%= button_to "削除", car_path(car), method: :delete,
+                      class: "c-button c-button--outline",
+                      form: { data: { turbo_confirm: "#{car.car_name}を削除しますか？この車の整備記録も削除されます。" } } %>
+              </div>
+            <% end %>
           </div>
         </li>
       <% end %>

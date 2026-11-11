@@ -93,4 +93,20 @@ demo.maintenances.visible.limit(2).each do |m|
   guest.favorites.find_or_create_by!(maintenance: m)
 end
 
+# 見本のグループ（demoがオーナー。ゲストはメンバーとして参加済み）
+hybrid_group = Group.find_or_create_by!(name: "ハイブリッド車の整備部", owner: demo) do |g|
+  g.theme = "ハイブリッド車"
+  g.introduction = "プリウス・アクア・フィットなど、ハイブリッド車の整備情報を交換するグループです。"
+  g.rules = "作業は安全第一で。高電圧の部分には触らないこと。部品の売買はしません。"
+end
+hybrid_group.group_users.find_or_create_by!(user: guest) { |gu| gu.status = :approved }
+hybrid_group.notices.find_or_create_by!(title: "ようこそ！まずは自己紹介をどうぞ", user: demo) do |n|
+  n.body = "参加ありがとうございます。\n乗っている車と、これまでにやった整備を、コメントで教えてください。"
+end
+
+Group.find_or_create_by!(name: "洗車・コーティング研究会", owner: demo) do |g|
+  g.theme = "洗車"
+  g.introduction = "手洗い洗車やコーティングのやり方、おすすめの道具を紹介し合うグループです。"
+end
+
 puts "完了しました"

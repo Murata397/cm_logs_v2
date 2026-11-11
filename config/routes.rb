@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+    delete "users/guest_to_sign_up", to: "users/sessions#guest_to_sign_up"
   end
 
   root "homes#top"
@@ -21,11 +22,16 @@ Rails.application.routes.draw do
     resource :membership, only: [:create, :destroy]
     # オーナーによる承認・拒否・メンバーの削除
     resources :group_users, only: [:update, :destroy]
+    # オーナーからメンバーへのお知らせ（メールも送る）
+    resources :notices, only: [:new, :create], controller: "group_notices"
   end
   resources :cars do
     resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]
     resources :fuel_logs, only: [:index, :new, :create, :edit, :update, :destroy]
   end
+
+  # 開発中だけ：送ったメールをブラウザで確認する画面
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   # サーバーが動いているか確認するためのURL（Rails 8の標準）
   get "up" => "rails/health#show", as: :rails_health_check

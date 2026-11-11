@@ -1,0 +1,10 @@
+<aside class="c-guest-banner" aria-label="ゲストで閲覧中のお知らせ">
+  <div class="l-container c-guest-banner__inner">
+    <p class="c-guest-banner__text">
+      <strong>ゲストで閲覧中です。</strong>
+      マイカー・給油・点検・グループは<span class="c-badge c-badge--sample">サンプル</span>のデータです。投稿・編集・削除はできません。
+    </p>
+    <%= button_to "新規登録して使ってみる", users_guest_to_sign_up_path, method: :delete,
+          class: "c-guest-banner__button" %>
+  </div>
+</aside>

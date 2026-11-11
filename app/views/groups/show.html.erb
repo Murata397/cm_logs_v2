@@ -32,8 +32,10 @@
         <% if !user_signed_in? %>
           <p class="p-group__note"><%= link_to "ログイン", new_user_session_path %>すると参加を申請できます。</p>
         <% elsif !can_post? %>
-          <p class="p-group__note">ゲストユーザーはグループに参加できません。</p>
+          <% if @status == "approved" %><span class="c-badge">参加中</span><% end %>
+          <p class="p-group__note">ゲストユーザーは参加・退出の操作ができません。</p>
         <% elsif @group.owned_by?(current_user) %>
+          <%= link_to "お知らせを送る", new_group_notice_path(@group), class: "c-button c-button--primary" %>
           <%= link_to "グループを編集", edit_group_path(@group), class: "c-button c-button--outline" %>
         <% elsif @status == "approved" %>
           <span class="c-badge">参加中</span>
@@ -54,6 +56,25 @@
     <section class="p-group__section">
       <h2 class="p-group__title">ルール</h2>
       <p class="p-group__rules"><%= @group.rules %></p>
+    </section>
+  <% end %>
+
+  <% if @notices %>
+    <section class="p-group__section">
+      <h2 class="p-group__title">お知らせ</h2>
+      <% if @notices.any? %>
+        <ul class="p-group__notices">
+          <% @notices.each do |notice| %>
+            <li class="p-group__notice">
+              <p class="p-group__notice-meta"><%= l notice.created_at, format: :short %> ／ <%= notice.user.name %></p>
+              <h3 class="p-group__notice-title"><%= notice.title %></h3>
+              <p class="p-group__notice-body"><%= notice.body %></p>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="p-group__note">お知らせはまだありません。</p>
+      <% end %>
     </section>
   <% end %>
 

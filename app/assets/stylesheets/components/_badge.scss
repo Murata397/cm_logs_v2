@@ -21,3 +21,11 @@
     border-color: var(--color-notice-bg);
   }
 }
+// ゲストの見本データの印
+.c-badge--sample {
+  font-weight: 700;
+  color: var(--color-text-sub);
+  background: transparent;
+  border: 1px dashed var(--color-text-sub);
+  vertical-align: middle;
+}

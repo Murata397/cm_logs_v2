@@ -6,6 +6,7 @@ ja:
       inspection_schedule: 点検の予定
       fuel_log: 給油の記録
       group: グループ
+      group_notice: お知らせ
       maintenance_step: 作業手順
       maintenance_tool: 使った工具
     attributes:
@@ -32,6 +33,9 @@ ja:
         theme: テーマ
         rules: ルール
         image: グループの画像
+      group_notice:
+        title: 件名
+        body: 本文
       fuel_log:
         refueled_on: 給油日
         odometer: 給油時の走行距離（km）

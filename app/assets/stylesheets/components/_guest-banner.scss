@@ -1,0 +1,38 @@
+@use "../foundation/mixins" as *;
+
+// ゲストでログインしている間、ヘッダーの下に出す案内
+.c-guest-banner {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    padding: 10px 0;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-sub);
+
+    strong {
+      color: var(--color-text);
+    }
+  }
+
+  &__button {
+    padding: 0;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}

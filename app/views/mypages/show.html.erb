@@ -30,7 +30,7 @@
 <div class="l-container p-mypage">
   <section class="p-mypage__section">
     <div class="p-mypage__head">
-      <h2 class="p-mypage__title">これからの点検</h2>
+      <h2 class="p-mypage__title">これからの点検 <%= sample_badge(@user) %></h2>
       <%= link_to "マイカーで管理 →", cars_path, class: "p-mypage__more" %>
     </div>
 
@@ -59,7 +59,7 @@
   </section>
 
   <section class="p-mypage__section">
-    <h2 class="p-mypage__title">燃費の記録</h2>
+    <h2 class="p-mypage__title">燃費の記録 <%= sample_badge(@user) %></h2>
 
     <% cars_with_logs = @cars.select { |car| car.fuel_logs.any? } %>
     <% if cars_with_logs.any? %>

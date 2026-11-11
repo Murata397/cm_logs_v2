@@ -180,4 +180,38 @@
     gap: 8px;
     margin-left: auto;
   }
+
+  &__notices {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__notice {
+    display: grid;
+    gap: 4px;
+    padding: 16px 20px;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-primary);
+    border-radius: 10px;
+  }
+
+  &__notice-meta {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+  }
+
+  &__notice-title {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  &__notice-body {
+    margin: 0;
+    font-size: 0.9375rem;
+    white-space: pre-wrap;
+  }
 }

@@ -1,0 +1,14 @@
+<%= @recipient.name %>さん
+
+参加しているグループ「<%= @group.name %>」から、お知らせが届きました。
+
+■ <%= @notice.title %>
+
+<%= @notice.body %>
+
+送信者：<%= @notice.user.name %>（グループのオーナー）
+
+グループのページ：<%= group_url(@group) %>
+
+--
+このメールは CM Logs から自動で送信しています。グループから退出すると、お知らせは届かなくなります。

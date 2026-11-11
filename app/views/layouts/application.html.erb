@@ -28,6 +28,9 @@
 
   <body>
     <%= render "shared/header" %>
+    <% if user_signed_in? && current_user.guest? %>
+      <%= render "shared/guest_banner" %>
+    <% end %>
     <main class="l-main">
       <% flash.each do |type, message| %>
         <p class="c-flash"><%= message %></p>
