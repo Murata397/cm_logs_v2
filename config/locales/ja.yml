@@ -3,6 +3,8 @@ ja:
     models:
       car: 車
       maintenance: 整備記録
+      maintenance_step: 作業手順
+      maintenance_tool: 使った工具
     attributes:
       user:
         name: 名前
@@ -14,3 +16,31 @@ ja:
         odometer: 走行距離（km）
         purpose: 主な用途
         image: 車の写真
+      maintenance:
+        user: ユーザー
+        title: タイトル
+        car: 車
+        car_id: 車
+        maintenance_day: 整備日
+        category: カテゴリー
+        work_difficulty: 難易度
+        work_time_minutes: 作業時間（分）
+        work_cost: 費用（円）
+        summary: 概要
+        related_information: 関連情報
+        images: 写真
+        status: 公開設定
+        steps: 作業手順
+        tools: 使った工具
+      maintenance_step:
+        title: やること
+        body: ポイント・注意点
+        position: 順番
+        image: 写真
+      maintenance_tool:
+        name: 工具名
+        image: 写真
+      maintenance/steps:
+        title: 作業手順の「やること」
+      maintenance/tools:
+        name: 工具名

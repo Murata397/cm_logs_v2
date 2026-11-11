@@ -22,6 +22,14 @@
           <span>作業日 <time datetime="<%= @maintenance.maintenance_day %>"><%= l @maintenance.maintenance_day %></time></span>
           <span><%= @maintenance.car.manufacturer_name %> <%= @maintenance.car.car_name %>（<%= @maintenance.car.car_model %>）</span>
         </p>
+        <% if user_signed_in? && @maintenance.user_id == current_user.id %>
+          <div class="p-maintenance__owner-actions">
+            <%= link_to "編集", edit_maintenance_path(@maintenance), class: "c-button c-button--outline" %>
+            <%= button_to "削除", maintenance_path(@maintenance), method: :delete,
+                  class: "c-button c-button--outline",
+                  form: { data: { turbo_confirm: "この整備記録を削除しますか？" } } %>
+          </div>
+        <% end %>
       </header>
 
       <div class="p-maintenance__image">

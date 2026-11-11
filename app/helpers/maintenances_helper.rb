@@ -6,6 +6,11 @@ module MaintenancesHelper
     DIFFICULTY_LABELS[maintenance.work_difficulty]
   end
 
+  # セレクトボックス用（["簡単", "easy"], ...）
+  def difficulty_options
+    DIFFICULTY_LABELS.map { |key, label| [label, key] }
+  end
+
   # 分を「1時間30分」のような表示に
   def work_time_label(minutes)
     return "—" if minutes.blank?

@@ -1,0 +1,106 @@
+<%= form_with model: maintenance, class: "c-form" do |f| %>
+  <%= render "shared/errors", model: maintenance %>
+
+  <div class="c-form__field">
+    <%= f.label :title, class: "c-form__label" %>
+    <%= f.text_field :title, placeholder: "例：エンジンオイル交換（DIY）", class: "c-form__input" %>
+  </div>
+
+  <div class="c-form__row">
+    <div class="c-form__field">
+      <%= f.label :car_id, class: "c-form__label" %>
+      <%= f.collection_select :car_id, current_user.cars, :id, :car_name,
+            { prompt: "選択してください" }, class: "c-form__input" %>
+    </div>
+    <div class="c-form__field">
+      <%= f.label :maintenance_day, class: "c-form__label" %>
+      <%= f.date_field :maintenance_day, class: "c-form__input" %>
+    </div>
+  </div>
+
+  <div class="c-form__row">
+    <div class="c-form__field">
+      <%= f.label :category, class: "c-form__label" %>
+      <%= f.select :category, Maintenance::CATEGORIES, { prompt: "選択してください" }, class: "c-form__input" %>
+    </div>
+    <div class="c-form__field">
+      <%= f.label :work_difficulty, class: "c-form__label" %>
+      <%= f.select :work_difficulty, difficulty_options, {}, class: "c-form__input" %>
+    </div>
+  </div>
+
+  <div class="c-form__row">
+    <div class="c-form__field">
+      <%= f.label :work_time_minutes, class: "c-form__label" %>
+      <%= f.number_field :work_time_minutes, min: 0, inputmode: "numeric", class: "c-form__input" %>
+    </div>
+    <div class="c-form__field">
+      <%= f.label :work_cost, class: "c-form__label" %>
+      <%= f.number_field :work_cost, min: 0, inputmode: "numeric", class: "c-form__input" %>
+    </div>
+  </div>
+
+  <div class="c-form__field">
+    <%= f.label :summary, class: "c-form__label" %>
+    <%= f.text_area :summary, rows: 3, placeholder: "どんな整備をしたか、ひとことで", class: "c-form__input c-form__textarea" %>
+  </div>
+
+  <div class="c-form__field">
+    <%= f.label :images, class: "c-form__label" %>
+    <%= f.file_field :images, multiple: true, accept: "image/*", class: "c-form__file" %>
+    <% if maintenance.images.attached? %>
+      <p class="c-form__hint">写真を選び直すと、今の写真（<%= maintenance.images.count %>枚）と入れ替わります</p>
+    <% end %>
+  </div>
+
+  <fieldset class="c-form__group" data-controller="nested-form">
+    <legend class="c-form__legend">作業手順</legend>
+
+    <template data-nested-form-target="template">
+      <%= f.fields_for :steps, MaintenanceStep.new, child_index: "NEW_RECORD" do |sf| %>
+        <%= render "step_fields", f: sf %>
+      <% end %>
+    </template>
+
+    <div class="c-form__list" data-nested-form-target="list">
+      <%= f.fields_for :steps do |sf| %>
+        <%= render "step_fields", f: sf %>
+      <% end %>
+    </div>
+
+    <button type="button" class="c-button c-button--outline" data-action="nested-form#add">＋ 手順を追加</button>
+  </fieldset>
+
+  <fieldset class="c-form__group" data-controller="nested-form">
+    <legend class="c-form__legend">使った工具</legend>
+
+    <template data-nested-form-target="template">
+      <%= f.fields_for :tools, MaintenanceTool.new, child_index: "NEW_RECORD" do |tf| %>
+        <%= render "tool_fields", f: tf %>
+      <% end %>
+    </template>
+
+    <div class="c-form__list" data-nested-form-target="list">
+      <%= f.fields_for :tools do |tf| %>
+        <%= render "tool_fields", f: tf %>
+      <% end %>
+    </div>
+
+    <button type="button" class="c-button c-button--outline" data-action="nested-form#add">＋ 工具を追加</button>
+  </fieldset>
+
+  <div class="c-form__field">
+    <%= f.label :related_information, class: "c-form__label" %>
+    <%= f.text_area :related_information, rows: 3, placeholder: "使った部品の品番、参考にしたサイトなど", class: "c-form__input c-form__textarea" %>
+  </div>
+
+  <fieldset class="c-form__group">
+    <legend class="c-form__legend">公開設定</legend>
+    <div class="c-form__radios">
+      <label><%= f.radio_button :status, "published" %> 公開する</label>
+      <label><%= f.radio_button :status, "draft" %> 下書きとして保存</label>
+    </div>
+  </fieldset>
+
+  <%= f.submit "保存する", class: "c-button c-button--primary c-button--block" %>
+<% end %>

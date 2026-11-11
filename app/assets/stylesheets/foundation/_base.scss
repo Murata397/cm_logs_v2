@@ -34,3 +34,18 @@ a {
 .l-main {
   flex: 1;
 }
+
+// hidden属性をつけたものは必ず隠す
+[hidden] {
+  display: none !important;
+}
+
+// 見た目は隠して、読み上げソフトには読ませる
+.u-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

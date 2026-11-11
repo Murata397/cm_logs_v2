@@ -1,0 +1,6 @@
+<div class="c-form__item c-form__item--inline js-nested-item" data-new-record="<%= f.object.new_record? %>">
+  <%= f.hidden_field :_destroy %>
+  <%= f.label :name, "工具名", class: "u-visually-hidden" %>
+  <%= f.text_field :name, placeholder: "例：ラチェットレンチ", class: "c-form__input" %>
+  <button type="button" class="c-form__remove" data-action="nested-form#remove">削除</button>
+</div>

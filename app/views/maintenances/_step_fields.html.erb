@@ -1,0 +1,19 @@
+<div class="c-form__item js-nested-item" data-new-record="<%= f.object.new_record? %>">
+  <%= f.hidden_field :position, class: "js-position" %>
+  <%= f.hidden_field :_destroy %>
+
+  <div class="c-form__item-head">
+    <span class="c-form__item-label">STEP <span class="js-number">1</span></span>
+    <button type="button" class="c-form__remove" data-action="nested-form#remove">削除</button>
+  </div>
+
+  <div class="c-form__field">
+    <%= f.label :title, "やること", class: "c-form__label" %>
+    <%= f.text_field :title, placeholder: "例：ドレンボルトを外して古いオイルを抜く", class: "c-form__input" %>
+  </div>
+
+  <div class="c-form__field">
+    <%= f.label :body, "ポイント・注意点（任意）", class: "c-form__label" %>
+    <%= f.text_area :body, rows: 2, class: "c-form__input c-form__textarea" %>
+  </div>
+</div>
