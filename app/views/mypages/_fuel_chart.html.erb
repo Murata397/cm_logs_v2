@@ -1,0 +1,33 @@
+<% chart = fuel_chart(logs) %>
+<% pad = chart[:padding] %>
+
+<figure class="p-fuel-chart">
+  <svg class="p-fuel-chart__svg" viewBox="0 0 <%= chart[:width] %> <%= chart[:height] %>"
+       role="img" aria-label="<%= car.car_name %>の燃費の推移（最新<%= logs.size %>回）">
+    <%# 目盛りの線と数値 %>
+    <% [chart[:max], (chart[:min] + chart[:max]) / 2.0, chart[:min]].each_with_index do |value, i| %>
+      <% y = pad + (chart[:height] - pad * 2) * i / 2.0 %>
+      <line class="p-fuel-chart__grid" x1="<%= pad %>" x2="<%= chart[:width] - pad %>" y1="<%= y %>" y2="<%= y %>" />
+      <text class="p-fuel-chart__axis" x="<%= pad - 8 %>" y="<%= y + 4 %>" text-anchor="end"><%= value.round(1) %></text>
+    <% end %>
+
+    <%# 折れ線と点 %>
+    <polyline class="p-fuel-chart__line" points="<%= chart[:points].map { |p| "#{p[:x]},#{p[:y]}" }.join(' ') %>" />
+    <% chart[:points].each do |p| %>
+      <circle class="p-fuel-chart__dot" cx="<%= p[:x] %>" cy="<%= p[:y] %>" r="5">
+        <title><%= l p[:date], format: :short %>：<%= p[:value] %> km/L</title>
+      </circle>
+      <text class="p-fuel-chart__axis" x="<%= p[:x] %>" y="<%= chart[:height] - 10 %>" text-anchor="middle"><%= p[:date].strftime("%-m/%-d") %></text>
+    <% end %>
+  </svg>
+
+  <figcaption class="u-visually-hidden">
+    <table>
+      <caption><%= car.car_name %>の燃費</caption>
+      <tr><th>給油日</th><th>燃費（km/L）</th></tr>
+      <% chart[:points].each do |p| %>
+        <tr><td><%= l p[:date] %></td><td><%= p[:value] %></td></tr>
+      <% end %>
+    </table>
+  </figcaption>
+</figure>

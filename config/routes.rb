@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   root "homes#top"
+  resource :mypage, only: [:show]
   resources :maintenances
   resources :cars, except: [:show] do
     resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]

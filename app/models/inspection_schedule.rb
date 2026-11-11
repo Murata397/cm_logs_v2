@@ -10,6 +10,12 @@ class InspectionSchedule < ApplicationRecord
     (next_due_on - Date.current).to_i
   end
 
+  # 次の点検まであと何km か
+  def km_left
+    return nil if next_due_odometer.blank? || car.odometer.blank?
+    next_due_odometer - car.odometer
+  end
+
   private
 
   def due_must_be_present

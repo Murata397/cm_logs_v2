@@ -19,4 +19,17 @@ class Car < ApplicationRecord
   def latest_fuel_log
     fuel_logs.max_by(&:refueled_on)
   end
+
+  # 平均燃費（全部の走行距離 ÷ 全部の給油量）
+  def average_efficiency
+    total_fuel = fuel_logs.to_a.sum(&:fuel_amount)
+    return nil if total_fuel.zero?
+
+    (fuel_logs.to_a.sum(&:trip_distance) / total_fuel).round(1)
+  end
+
+  # グラフ用：古い順に最新10件
+  def recent_fuel_logs
+    fuel_logs.sort_by(&:refueled_on).last(10)
+  end
 end
