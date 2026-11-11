@@ -5,39 +5,6 @@
     <h1 class="p-form-page__title">給油を記録</h1>
     <p class="p-form-page__sub"><%= @car.car_name %></p>
 
-    <%= form_with model: [@car, @fuel_log], class: "c-form" do |f| %>
-      <%= render "shared/errors", model: @fuel_log %>
-
-      <div class="c-form__row">
-        <div class="c-form__field">
-          <%= f.label :refueled_on, class: "c-form__label" %>
-          <%= f.date_field :refueled_on, class: "c-form__input" %>
-        </div>
-        <div class="c-form__field">
-          <%= f.label :fuel_type, class: "c-form__label" %>
-          <%= f.select :fuel_type, FuelLog::FUEL_TYPES, {}, class: "c-form__input" %>
-        </div>
-      </div>
-
-      <div class="c-form__row">
-        <div class="c-form__field">
-          <%= f.label :trip_distance, class: "c-form__label" %>
-          <%= f.number_field :trip_distance, min: 0, step: 0.1, inputmode: "decimal", class: "c-form__input" %>
-          <p class="c-form__hint">トリップメーターの数字です</p>
-        </div>
-        <div class="c-form__field">
-          <%= f.label :fuel_amount, class: "c-form__label" %>
-          <%= f.number_field :fuel_amount, min: 0, step: 0.01, inputmode: "decimal", class: "c-form__input" %>
-        </div>
-      </div>
-
-      <div class="c-form__field">
-        <%= f.label :odometer, class: "c-form__label" %>
-        <%= f.number_field :odometer, min: 0, inputmode: "numeric", class: "c-form__input" %>
-        <p class="c-form__hint">入力すると、車の走行距離も更新されます（任意）</p>
-      </div>
-
-      <%= f.submit "記録する", class: "c-button c-button--primary c-button--block" %>
-    <% end %>
+    <%= render "form", car: @car, fuel_log: @fuel_log, submit_label: "記録する" %>
   </div>
 </section>

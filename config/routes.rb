@@ -9,13 +9,14 @@ Rails.application.routes.draw do
 
   root "homes#top"
   resource :mypage, only: [:show]
+  resource :profile, only: [:edit, :update]
   resources :maintenances do
     resources :comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
   end
   resources :cars, except: [:show] do
     resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]
-    resources :fuel_logs, only: [:new, :create, :destroy]
+    resources :fuel_logs, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   # サーバーが動いているか確認するためのURL（Rails 8の標準）

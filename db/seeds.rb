@@ -57,4 +57,40 @@ samples.each_with_index do |s, i|
   )
 end
 
+# ゲストユーザーの見本データ（マイページの機能を見てもらうため）
+guest = User.guest
+
+guest_car = guest.cars.find_or_create_by!(car_name: "フィット") do |c|
+  c.manufacturer_name = "ホンダ"
+  c.car_model = "GK3"
+  c.odometer = 68_000
+  c.purpose = "通勤・買い物"
+end
+
+if guest_car.fuel_logs.empty?
+  [
+    [70, 412.3, 22.4], [56, 438.9, 23.1], [42, 401.2, 21.8],
+    [28, 455.0, 22.9], [14, 470.6, 23.0], [3, 448.1, 21.5]
+  ].each do |days_ago, trip, fuel|
+    guest_car.fuel_logs.create!(
+      refueled_on: Date.current - days_ago,
+      trip_distance: trip,
+      fuel_amount: fuel,
+      fuel_type: "レギュラー"
+    )
+  end
+end
+
+guest_car.inspection_schedules.find_or_create_by!(item: "エンジンオイル交換") do |s|
+  s.next_due_on = Date.current + 10
+  s.next_due_odometer = 68_400
+end
+guest_car.inspection_schedules.find_or_create_by!(item: "車検") do |s|
+  s.next_due_on = Date.current + 120
+end
+
+demo.maintenances.visible.limit(2).each do |m|
+  guest.favorites.find_or_create_by!(maintenance: m)
+end
+
 puts "完了しました"

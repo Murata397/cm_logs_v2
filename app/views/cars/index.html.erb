@@ -43,6 +43,9 @@
             <div class="p-cars__links">
               <%= link_to "＋ 点検の予定", new_car_inspection_schedule_path(car) %>
               <%= link_to "＋ 給油を記録", new_car_fuel_log_path(car) %>
+              <% if car.fuel_logs.any? %>
+                <%= link_to "給油の履歴", car_fuel_logs_path(car) %>
+              <% end %>
             </div>
             <div class="p-cars__actions">
               <%= link_to "編集", edit_car_path(car), class: "c-button c-button--outline" %>

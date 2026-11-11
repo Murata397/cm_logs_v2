@@ -72,6 +72,13 @@
       font-weight: 700;
     }
   }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
 }
 
 // 各セクション
@@ -164,6 +171,12 @@
     & + & {
       margin-top: 16px;
     }
+  }
+
+  &__fuel-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 
   &__fuel-name {

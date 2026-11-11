@@ -1,0 +1,13 @@
+<% content_for :title, "給油の記録を編集 | CM Logs" %>
+
+<section class="p-form-page">
+  <div class="p-form-page__card">
+    <h1 class="p-form-page__title">給油の記録を編集</h1>
+    <p class="p-form-page__sub"><%= @car.car_name %></p>
+    <%= render "form", car: @car, fuel_log: @fuel_log, submit_label: "更新する" %>
+
+    <%= button_to "この記録を削除", car_fuel_log_path(@car, @fuel_log), method: :delete,
+          class: "c-button c-button--outline c-button--block p-form-page__delete",
+          form: { data: { turbo_confirm: "#{l @fuel_log.refueled_on}の給油の記録を削除しますか？" } } %>
+  </div>
+</section>

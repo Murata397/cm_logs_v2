@@ -1,0 +1,111 @@
+@use "../foundation/mixins" as *;
+
+.p-fuel-logs {
+  padding: 40px 0 80px;
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  &__sub {
+    margin: 4px 0 0;
+    color: var(--color-text-sub);
+  }
+
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 24px;
+
+    div {
+      min-width: 140px;
+      padding: 12px 16px;
+      background: var(--color-surface);
+      border-radius: 10px;
+    }
+
+    dt {
+      font-size: 0.75rem;
+      color: var(--color-text-sub);
+    }
+
+    dd {
+      margin: 2px 0 0;
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+  }
+
+  // スマホでは表を横にスクロールできるようにする
+  &__table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  &__table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+
+    th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    thead th {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-text-sub);
+      background: var(--color-surface);
+    }
+
+    tbody tr:last-child th,
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  &__efficiency {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  &__edit {
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  &__empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--color-text-sub);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  &__back {
+    margin: 24px 0 0;
+    font-size: 0.875rem;
+
+    a {
+      color: var(--color-text-sub);
+    }
+  }
+}

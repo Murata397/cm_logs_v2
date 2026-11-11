@@ -1,0 +1,55 @@
+<% content_for :title, "#{@car.car_name}の給油の履歴 | CM Logs" %>
+
+<section class="l-container p-fuel-logs">
+  <header class="p-fuel-logs__head">
+    <div>
+      <h1 class="p-fuel-logs__title">給油の履歴</h1>
+      <p class="p-fuel-logs__sub"><%= @car.car_name %>（<%= @car.manufacturer_name %>）</p>
+    </div>
+    <% if can_post? %>
+      <%= link_to "＋ 給油を記録", new_car_fuel_log_path(@car), class: "c-button c-button--primary" %>
+    <% end %>
+  </header>
+
+  <% if @fuel_logs.any? %>
+    <dl class="p-fuel-logs__stats">
+      <div><dt>平均燃費</dt><dd><%= @car.average_efficiency %> km/L</dd></div>
+      <div><dt>記録した回数</dt><dd><%= @fuel_logs.size %>回</dd></div>
+    </dl>
+
+    <div class="p-fuel-logs__table-wrap">
+      <table class="p-fuel-logs__table">
+        <thead>
+          <tr>
+            <th scope="col">給油日</th>
+            <th scope="col">燃費</th>
+            <th scope="col">走行距離</th>
+            <th scope="col">給油量</th>
+            <th scope="col">燃料</th>
+            <th scope="col">メーター</th>
+            <% if can_post? %><th scope="col"><span class="u-visually-hidden">操作</span></th><% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @fuel_logs.each do |log| %>
+            <tr>
+              <th scope="row"><%= l log.refueled_on %></th>
+              <td class="p-fuel-logs__efficiency"><%= log.efficiency %> km/L</td>
+              <td><%= log.trip_distance.to_f %> km</td>
+              <td><%= log.fuel_amount.to_f %> L</td>
+              <td><%= log.fuel_type.presence || "—" %></td>
+              <td><%= log.odometer ? "#{number_with_delimiter(log.odometer)} km" : "—" %></td>
+              <% if can_post? %>
+                <td><%= link_to "編集", edit_car_fuel_log_path(@car, log), class: "p-fuel-logs__edit", aria: { label: "#{l log.refueled_on}の給油を編集" } %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="p-fuel-logs__empty">給油の記録はまだありません。</p>
+  <% end %>
+
+  <p class="p-fuel-logs__back"><%= link_to "← マイカーへ戻る", cars_path %></p>
+</section>

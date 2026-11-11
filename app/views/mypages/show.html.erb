@@ -16,6 +16,12 @@
         <div><dt>整備記録</dt><dd><%= @user.maintenances.visible.count %></dd></div>
         <div><dt>マイカー</dt><dd><%= @cars.size %></dd></div>
       </dl>
+      <% if can_post? %>
+        <div class="p-mypage-profile__actions">
+          <%= link_to "プロフィールを編集", edit_profile_path, class: "c-button c-button--outline" %>
+          <%= link_to "アカウント設定", edit_user_registration_path, class: "c-button c-button--outline" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </section>
@@ -60,7 +66,12 @@
         <article class="p-mypage__fuel">
           <div class="p-mypage__fuel-head">
             <h3 class="p-mypage__fuel-name"><%= car.car_name %></h3>
-            <%= link_to "＋ 給油を記録", new_car_fuel_log_path(car), class: "p-mypage__more" %>
+            <div class="p-mypage__fuel-links">
+              <%= link_to "履歴・編集", car_fuel_logs_path(car), class: "p-mypage__more" %>
+              <% if can_post? %>
+                <%= link_to "＋ 給油を記録", new_car_fuel_log_path(car), class: "p-mypage__more" %>
+              <% end %>
+            </div>
           </div>
           <dl class="p-mypage__fuel-stats">
             <div><dt>平均燃費</dt><dd><%= car.average_efficiency %> km/L</dd></div>
