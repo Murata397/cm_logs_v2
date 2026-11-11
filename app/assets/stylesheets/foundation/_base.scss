@@ -49,3 +49,12 @@ a {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+// PCだけで表示する（改行など）
+.u-pc-only {
+  display: none;
+
+  @media (min-width: 1024px) {
+    display: inline;
+  }
+}

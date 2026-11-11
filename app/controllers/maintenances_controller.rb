@@ -1,9 +1,11 @@
 class MaintenancesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :reject_guest_user, except: [:index, :show]
   before_action :set_own_maintenance, only: [:edit, :update, :destroy]
 
   def index
     @maintenances = Maintenance.visible.latest.includes(:user, :car, images_attachments: :blob)
+    @maintenances = @maintenances.where(category: params[:category]) if params[:category].present?
   end
 
   def show

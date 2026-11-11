@@ -1,0 +1,202 @@
+@use "../foundation/mixins" as *;
+
+// 一番上
+.p-top-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0 96px;
+  border-bottom: 1px solid var(--color-border);
+
+  @include pc {
+    padding: 120px 0 140px;
+  }
+
+  &__inner {
+    position: relative;
+  }
+
+  &__text {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 24px;
+    max-width: 640px;
+  }
+
+  &__eyebrow {
+    margin: 0;
+    font-family: var(--font-en);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-primary);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    line-height: 1.3;
+  }
+
+  &__lead {
+    margin: 0;
+    color: var(--color-text-sub);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  // 背景の大きなボディライン
+  &__line {
+    position: absolute;
+    right: -20%;
+    bottom: -40px;
+    width: 120%;
+    color: var(--color-primary);
+    opacity: 0.15;
+    pointer-events: none;
+
+    @include pc {
+      right: -8%;
+      bottom: -60px;
+      width: 75%;
+    }
+  }
+}
+
+// 各セクション共通
+.p-top-section {
+  padding: 72px 0;
+
+  @include pc {
+    padding: 96px 0;
+  }
+
+  &--surface {
+    background: var(--color-surface);
+  }
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    margin: 0 0 32px;
+    font-size: 1.75rem;
+  }
+
+  &__head &__title {
+    margin-bottom: 0;
+  }
+
+  &__more {
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+}
+
+// できること
+.p-top-features {
+  display: grid;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include tab {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &__item {
+    display: grid;
+    gap: 12px;
+    padding: 28px 24px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-primary);
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-text-sub);
+  }
+}
+
+// 新着
+.p-top-latest {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+// カテゴリ
+.p-top-categories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include tab {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  &__link {
+    display: grid;
+    place-items: center;
+    min-height: 64px;
+    padding: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+  }
+}
+
+// 最後の呼びかけ
+.p-top-cta {
+  padding: 72px 0;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+
+  &__inner {
+    display: grid;
+    justify-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 700;
+  }
+}

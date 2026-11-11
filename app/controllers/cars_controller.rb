@@ -1,5 +1,6 @@
 class CarsController < ApplicationController
   before_action :authenticate_user!
+  before_action :reject_guest_user, except: [:index]
   before_action :set_car, only: [:edit, :update, :destroy]
 
   def index

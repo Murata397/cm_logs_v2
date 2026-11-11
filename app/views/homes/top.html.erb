@@ -1,4 +1,96 @@
-<section class="l-container" style="padding: 80px 0;">
-  <h1>整備の手順を、みんなで残す。</h1>
-  <p>デザインの土台ができたら、ここをトップページに作り込みます。</p>
+<% content_for :title, "CM Logs | 整備の手順を、みんなで残す。" %>
+
+<section class="p-top-hero">
+  <div class="l-container p-top-hero__inner">
+    <div class="p-top-hero__text">
+      <p class="p-top-hero__eyebrow">DIY MAINTENANCE COMMUNITY</p>
+      <h1 class="p-top-hero__title">整備の手順を、<br>みんなで残す。</h1>
+      <p class="p-top-hero__lead">
+        作業手順・使った工具・かかった時間と費用を記録して共有。<br class="u-pc-only">
+        整備初心者でも安心して作業できる場所をつくります。
+      </p>
+      <div class="p-top-hero__actions">
+        <% if can_post? %>
+          <%= link_to "整備記録を見る", maintenances_path, class: "c-button c-button--primary c-button--lg" %>
+          <%= link_to "＋ 記録を投稿", new_maintenance_path, class: "c-button c-button--outline c-button--lg" %>
+        <% elsif user_signed_in? %>
+          <%= link_to "整備記録を見る", maintenances_path, class: "c-button c-button--primary c-button--lg" %>
+        <% else %>
+          <%= button_to "ゲストログインで見てみる", users_guest_sign_in_path, class: "c-button c-button--primary c-button--lg" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "c-button c-button--outline c-button--lg" %>
+        <% end %>
+      </div>
+    </div>
+
+    <svg class="p-top-hero__line" viewBox="0 0 300 44" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M2 38 C30 36 56 33 84 30 C112 10 142 4 172 4 C206 4 232 13 258 24 C276 27 290 32 298 38 C288 35 274 31 256 29 C230 19 204 11 172 11 C144 11 116 16 90 33 C60 36 32 38 2 38 Z"/>
+    </svg>
+  </div>
+</section>
+
+<section class="p-top-section">
+  <div class="l-container">
+    <h2 class="p-top-section__title">CM Logsでできること</h2>
+    <ul class="p-top-features">
+      <li class="p-top-features__item">
+        <svg class="p-top-features__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3 class="p-top-features__name">整備手順を共有</h3>
+        <p class="p-top-features__text">作業手順・工具・作業時間・費用を、ステップごとに投稿できます。</p>
+      </li>
+      <li class="p-top-features__item">
+        <svg class="p-top-features__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="p-top-features__name">点検時期をお知らせ</h3>
+        <p class="p-top-features__text">次の点検日や走行距離を登録すると、マイページで残り日数を確認できます。</p>
+      </li>
+      <li class="p-top-features__item">
+        <svg class="p-top-features__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 14l4-4M3.34 19a10 10 0 1 1 17.32 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3 class="p-top-features__name">燃費を記録</h3>
+        <p class="p-top-features__text">給油ごとに記録して、燃費の変化をグラフで確認できます。</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="p-top-section p-top-section--surface">
+  <div class="l-container">
+    <div class="p-top-section__head">
+      <h2 class="p-top-section__title">新着の整備記録</h2>
+      <%= link_to "すべて見る →", maintenances_path, class: "p-top-section__more" %>
+    </div>
+    <% if @latest.any? %>
+      <div class="p-top-latest">
+        <%= render @latest %>
+      </div>
+    <% else %>
+      <p>まだ整備記録がありません。</p>
+    <% end %>
+  </div>
+</section>
+
+<section class="p-top-section">
+  <div class="l-container">
+    <h2 class="p-top-section__title">カテゴリから探す</h2>
+    <ul class="p-top-categories">
+      <% Maintenance::CATEGORIES.each do |category| %>
+        <li><%= link_to category, maintenances_path(category: category), class: "p-top-categories__link" %></li>
+      <% end %>
+    </ul>
+  </div>
+</section>
+
+<section class="p-top-cta">
+  <div class="l-container p-top-cta__inner">
+    <p class="p-top-cta__text">あなたの整備記録が、誰かの助けになる。</p>
+    <% if can_post? %>
+      <%= link_to "＋ 記録を投稿する", new_maintenance_path, class: "c-button c-button--primary c-button--lg" %>
+    <% else %>
+      <%= link_to "無料で始める", new_user_registration_path, class: "c-button c-button--primary c-button--lg" %>
+    <% end %>
+  </div>
 </section>

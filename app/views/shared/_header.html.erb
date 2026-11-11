@@ -25,7 +25,11 @@
         </button>
 
         <% if user_signed_in? %>
-          <%= link_to "＋ 記録を投稿", new_maintenance_path, class: "c-button c-button--primary" %>
+          <% if can_post? %>
+            <%= link_to "＋ 記録を投稿", new_maintenance_path, class: "c-button c-button--primary" %>
+          <% else %>
+            <span class="c-badge">ゲストで閲覧中</span>
+          <% end %>
           <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "c-button c-button--outline" %>
         <% else %>
           <%= link_to "ログイン", new_user_session_path, class: "c-button c-button--outline" %>
