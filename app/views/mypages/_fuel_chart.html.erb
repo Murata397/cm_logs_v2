@@ -8,7 +8,7 @@
     <% [chart[:max], (chart[:min] + chart[:max]) / 2.0, chart[:min]].each_with_index do |value, i| %>
       <% y = pad + (chart[:height] - pad * 2) * i / 2.0 %>
       <line class="p-fuel-chart__grid" x1="<%= pad %>" x2="<%= chart[:width] - pad %>" y1="<%= y %>" y2="<%= y %>" />
-      <text class="p-fuel-chart__axis" x="<%= pad - 8 %>" y="<%= y + 4 %>" text-anchor="end"><%= value.round(1) %></text>
+      <text class="p-fuel-chart__axis" x="<%= pad - 8 %>" y="<%= y + 4 %>" text-anchor="end"><%= number_with_precision(value, precision: 1, strip_insignificant_zeros: true) %></text>
     <% end %>
 
     <%# 折れ線と点 %>
