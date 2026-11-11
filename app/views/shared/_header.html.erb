@@ -1,9 +1,6 @@
 <header class="l-header" data-controller="nav">
   <div class="l-container l-header__inner">
-    <%= link_to root_path, class: "l-header__logo" do %>
-      <span class="l-header__logo-mark" aria-hidden="true"></span>
-      <span>CM Logs</span>
-    <% end %>
+    <%= render "shared/logo" %>
 
     <button class="l-header__menu-btn" type="button"
             aria-controls="global-nav" aria-expanded="false" aria-label="メニューを開く"

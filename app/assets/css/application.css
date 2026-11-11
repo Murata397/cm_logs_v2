@@ -826,3 +826,32 @@ a {
   border: 2px dashed var(--color-border);
   border-radius: var(--radius);
 }
+
+.c-logo {
+  display: inline-grid;
+  justify-items: center;
+  gap: 2px;
+  line-height: 1;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.c-logo__line {
+  width: 120px;
+  height: auto;
+  color: var(--color-primary);
+}
+.c-logo__text {
+  margin-right: -0.28em;
+  font-family: var(--font-en);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+}
+.c-logo__sub {
+  margin-right: -0.3em;
+  font-family: var(--font-en);
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--color-text-sub);
+}
