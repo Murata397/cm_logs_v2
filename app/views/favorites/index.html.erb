@@ -1,0 +1,19 @@
+<% content_for :title, "お気に入り | CM Logs" %>
+
+<section class="l-container p-user">
+  <header class="p-user__head">
+    <h1 class="p-user__page-title">お気に入り</h1>
+    <p class="p-user__lead">お気に入りした整備記録（<%= @maintenances.size %>件）</p>
+  </header>
+
+  <% if @maintenances.any? %>
+    <div class="c-card-grid">
+      <%= render @maintenances %>
+    </div>
+  <% else %>
+    <p class="p-user__empty">
+      お気に入りした整備記録はまだありません。<br>
+      <%= link_to "整備記録を探す", maintenances_path %>
+    </p>
+  <% end %>
+</section>

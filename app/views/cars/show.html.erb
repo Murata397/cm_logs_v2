@@ -1,0 +1,110 @@
+<% content_for :title, "#{@car.car_name} | CM Logs" %>
+
+<div class="l-container p-car">
+  <section class="p-car__hero">
+    <div class="p-car__image">
+      <% if @car.image.attached? %>
+        <%= image_tag @car.image, alt: @car.car_name %>
+      <% else %>
+        <span class="p-car__no-image">NO IMAGE</span>
+      <% end %>
+    </div>
+
+    <div class="p-car__info">
+      <h1 class="p-car__name"><%= @car.car_name %></h1>
+      <p class="p-car__owner">オーナー：<%= link_to @car.user.name, user_path(@car.user) %></p>
+      <dl class="p-car__spec">
+        <div><dt>メーカー</dt><dd><%= @car.manufacturer_name %></dd></div>
+        <div><dt>型式</dt><dd><%= @car.car_model %></dd></div>
+        <% if @car.purpose.present? %>
+          <div><dt>主な用途</dt><dd><%= @car.purpose %></dd></div>
+        <% end %>
+        <% if @car.odometer.present? %>
+          <div><dt>走行距離</dt><dd><%= number_with_delimiter(@car.odometer) %> km</dd></div>
+        <% end %>
+        <% if (average = @car.average_efficiency) %>
+          <div><dt>平均燃費</dt><dd><%= average %> km/L</dd></div>
+        <% end %>
+      </dl>
+
+      <% if @owner && can_post? %>
+        <div class="p-car__actions">
+          <%= link_to "車の情報を編集", edit_car_path(@car), class: "c-button c-button--outline" %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <% if @owner %>
+    <section class="p-car__section p-car__manage">
+      <div class="p-car__head">
+        <h2 class="p-car__title">点検の予定</h2>
+        <% if can_post? %>
+          <%= link_to "＋ 点検の予定", new_car_inspection_schedule_path(@car), class: "p-car__more" %>
+        <% end %>
+      </div>
+      <% if @schedules.any? %>
+        <ul class="p-car__schedules">
+          <% @schedules.each do |schedule| %>
+            <li class="p-car__schedule">
+              <div>
+                <p class="p-car__schedule-item"><%= schedule.item %></p>
+                <p class="p-car__schedule-sub">
+                  <%= [schedule.next_due_on && "#{l schedule.next_due_on} 予定",
+                       schedule.next_due_odometer && "#{number_with_delimiter(schedule.next_due_odometer)} km"].compact.join(" ／ ") %>
+                </p>
+              </div>
+              <div class="p-car__schedule-right">
+                <% if schedule.days_left %>
+                  <% if schedule.days_left.negative? %>
+                    <span class="c-badge c-badge--notice"><%= schedule.days_left.abs %>日過ぎています</span>
+                  <% else %>
+                    <span class="c-badge <%= 'c-badge--notice' if schedule.days_left <= 14 %>">あと<%= schedule.days_left %>日</span>
+                  <% end %>
+                <% end %>
+                <% if schedule.km_left %>
+                  <span class="c-badge <%= 'c-badge--notice' if schedule.km_left <= 500 %>">
+                    <%= schedule.km_left.negative? ? "#{number_with_delimiter(schedule.km_left.abs)}km過ぎています" : "あと#{number_with_delimiter(schedule.km_left)}km" %>
+                  </span>
+                <% end %>
+                <% if can_post? %>
+                  <%= link_to "編集", edit_car_inspection_schedule_path(@car, schedule), class: "p-car__more" %>
+                <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="p-car__empty">点検の予定はまだありません。</p>
+      <% end %>
+
+      <div class="p-car__head p-car__head--sub">
+        <h2 class="p-car__title">給油の記録</h2>
+        <div class="p-car__links">
+          <% if @car.fuel_logs.any? %>
+            <%= link_to "履歴・編集", car_fuel_logs_path(@car), class: "p-car__more" %>
+          <% end %>
+          <% if can_post? %>
+            <%= link_to "＋ 給油を記録", new_car_fuel_log_path(@car), class: "p-car__more" %>
+          <% end %>
+        </div>
+      </div>
+      <% if (latest = @car.latest_fuel_log) %>
+        <p class="p-car__fuel">最新の燃費 <strong><%= latest.efficiency %> km/L</strong>（<%= l latest.refueled_on %>）・記録<%= @car.fuel_logs.size %>回</p>
+      <% else %>
+        <p class="p-car__empty">給油の記録はまだありません。</p>
+      <% end %>
+    </section>
+  <% end %>
+
+  <section class="p-car__section">
+    <h2 class="p-car__title">この車の整備記録</h2>
+    <% if @maintenances.any? %>
+      <div class="c-card-grid">
+        <%= render @maintenances %>
+      </div>
+    <% else %>
+      <p class="p-car__empty">まだ整備記録がありません。</p>
+    <% end %>
+  </section>
+</div>

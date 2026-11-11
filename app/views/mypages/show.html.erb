@@ -16,12 +16,13 @@
         <div><dt>整備記録</dt><dd><%= @user.maintenances.visible.count %></dd></div>
         <div><dt>マイカー</dt><dd><%= @cars.size %></dd></div>
       </dl>
-      <% if can_post? %>
-        <div class="p-mypage-profile__actions">
+      <div class="p-mypage-profile__actions">
+        <% if can_post? %>
           <%= link_to "プロフィールを編集", edit_profile_path, class: "c-button c-button--outline" %>
           <%= link_to "アカウント設定", edit_user_registration_path, class: "c-button c-button--outline" %>
-        </div>
-      <% end %>
+        <% end %>
+        <%= link_to "公開ページを見る", user_path(@user), class: "c-button c-button--outline" %>
+      </div>
     </div>
   </div>
 </section>
@@ -113,7 +114,10 @@
   </section>
 
   <section class="p-mypage__section">
-    <h2 class="p-mypage__title">お気に入り</h2>
+    <div class="p-mypage__head">
+      <h2 class="p-mypage__title">お気に入り</h2>
+      <%= link_to "すべて見る →", favorites_path, class: "p-mypage__more" %>
+    </div>
     <% if @favorites.any? %>
       <ul class="p-mypage__posts">
         <% @favorites.each do |m| %>

@@ -1,0 +1,62 @@
+<% content_for :title, "#{@user.name} | CM Logs" %>
+
+<section class="p-mypage-profile">
+  <div class="l-container p-mypage-profile__inner">
+    <div class="p-mypage-profile__avatar">
+      <% if @user.profile_image.attached? %>
+        <%= image_tag @user.profile_image, alt: "" %>
+      <% else %>
+        <span aria-hidden="true"><%= @user.name.first %></span>
+      <% end %>
+    </div>
+    <div class="p-mypage-profile__body">
+      <h1 class="p-mypage-profile__name"><%= @user.name %></h1>
+      <p class="p-mypage-profile__intro"><%= @user.introduction.presence || "自己紹介はまだありません" %></p>
+      <dl class="p-mypage-profile__stats">
+        <div><dt>整備記録</dt><dd><%= @maintenances.size %></dd></div>
+        <div><dt>マイカー</dt><dd><%= @cars.size %></dd></div>
+      </dl>
+      <% if user_signed_in? && @user == current_user %>
+        <div class="p-mypage-profile__actions">
+          <%= link_to "マイページへ", mypage_path, class: "c-button c-button--outline" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<div class="l-container p-user">
+  <% if @cars.any? %>
+    <section class="p-user__section">
+      <h2 class="p-user__title">乗っている車</h2>
+      <ul class="p-user__cars">
+        <% @cars.each do |car| %>
+          <li>
+            <%= link_to car_path(car), class: "p-user__car" do %>
+              <span class="p-user__car-image">
+                <% if car.image.attached? %>
+                  <%= image_tag car.image, alt: "", loading: "lazy" %>
+                <% else %>
+                  <span aria-hidden="true">NO IMAGE</span>
+                <% end %>
+              </span>
+              <span class="p-user__car-name"><%= car.car_name %></span>
+              <span class="p-user__car-sub"><%= car.manufacturer_name %> ／ <%= car.car_model %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <section class="p-user__section">
+    <h2 class="p-user__title"><%= @user.name %>さんの整備記録</h2>
+    <% if @maintenances.any? %>
+      <div class="c-card-grid">
+        <%= render @maintenances %>
+      </div>
+    <% else %>
+      <p class="p-user__empty">まだ整備記録がありません。</p>
+    <% end %>
+  </section>
+</div>

@@ -60,6 +60,14 @@
   &__name {
     margin: 0;
     font-size: 1.25rem;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        color: var(--color-primary);
+      }
+    }
   }
 
   &__spec {

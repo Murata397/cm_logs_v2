@@ -8,13 +8,15 @@ Rails.application.routes.draw do
   end
 
   root "homes#top"
+  resources :users, only: [:show]
+  resources :favorites, only: [:index]
   resource :mypage, only: [:show]
   resource :profile, only: [:edit, :update]
   resources :maintenances do
     resources :comments, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
   end
-  resources :cars, except: [:show] do
+  resources :cars do
     resources :inspection_schedules, only: [:new, :create, :edit, :update, :destroy]
     resources :fuel_logs, only: [:index, :new, :create, :edit, :update, :destroy]
   end

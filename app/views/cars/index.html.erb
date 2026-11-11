@@ -18,7 +18,7 @@
             <% end %>
           </div>
           <div class="p-cars__body">
-            <h2 class="p-cars__name"><%= car.car_name %></h2>
+            <h2 class="p-cars__name"><%= link_to car.car_name, car_path(car) %></h2>
             <p class="p-cars__spec"><%= car.manufacturer_name %> ／ <%= car.car_model %></p>
             <% if car.odometer.present? %>
               <p class="p-cars__spec">走行距離 <%= number_with_delimiter(car.odometer) %> km</p>

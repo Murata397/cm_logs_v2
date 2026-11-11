@@ -18,9 +18,9 @@
         </div>
         <h1 class="p-maintenance__title"><%= @maintenance.title %></h1>
         <p class="p-maintenance__meta">
-          <span><%= @maintenance.user.name %></span>
+          <span><%= link_to @maintenance.user.name, user_path(@maintenance.user) %></span>
           <span>作業日 <time datetime="<%= @maintenance.maintenance_day %>"><%= l @maintenance.maintenance_day %></time></span>
-          <span><%= @maintenance.car.manufacturer_name %> <%= @maintenance.car.car_name %>（<%= @maintenance.car.car_model %>）</span>
+          <span><%= link_to "#{@maintenance.car.manufacturer_name} #{@maintenance.car.car_name}", car_path(@maintenance.car) %>（<%= @maintenance.car.car_model %>）</span>
         </p>
         <%= render "favorites/button", maintenance: @maintenance %>
         <% if user_signed_in? && @maintenance.user_id == current_user.id %>
@@ -122,7 +122,7 @@
     <aside class="p-maintenance__side">
       <section class="p-maintenance__box">
         <h2 class="p-maintenance__box-title">投稿者</h2>
-        <p class="p-maintenance__author"><%= @maintenance.user.name %></p>
+        <p class="p-maintenance__author"><%= link_to @maintenance.user.name, user_path(@maintenance.user) %></p>
         <% if @maintenance.user.introduction.present? %>
           <p class="p-maintenance__author-text"><%= @maintenance.user.introduction %></p>
         <% end %>

@@ -1,6 +1,6 @@
 class CarsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :reject_guest_user, except: [:index]
+  before_action :authenticate_user!, except: [:show]
+  before_action :reject_guest_user, except: [:index, :show]
   before_action :set_car, only: [:edit, :update, :destroy]
 
   def index
@@ -8,6 +8,17 @@ class CarsController < ApplicationController
                         .with_attached_image
                         .includes(:inspection_schedules, :fuel_logs)
                         .order(:created_at)
+  end
+
+  # 車の詳細（だれでも見られる。持ち主には管理用のメニューも出す）
+  def show
+    @car = Car.joins(:user).merge(User.active)
+              .with_attached_image
+              .includes(:user, :inspection_schedules, :fuel_logs)
+              .find(params[:id])
+    @owner = user_signed_in? && @car.user_id == current_user.id
+    @maintenances = @car.maintenances.visible.latest.includes(:user, :car, images_attachments: :blob)
+    @schedules = @car.inspection_schedules.sort_by { |s| [s.next_due_on ? 0 : 1, s.next_due_on || Date.current] } if @owner
   end
 
   def new

@@ -104,3 +104,10 @@
     }
   }
 }
+
+// カードを並べる（ユーザー・お気に入り・車のページで共通）
+.c-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
