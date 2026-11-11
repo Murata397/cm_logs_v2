@@ -1,7 +1,7 @@
 class MaintenancesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :reject_guest_user, except: [:index, :show]
-  before_action :set_own_maintenance, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :reject_guest_user, except: [ :index, :show ]
+  before_action :set_own_maintenance, only: [ :edit, :update, :destroy ]
 
   def index
     # 絞り込みのメーカーの選択肢（公開中の記録がある車のメーカーだけ）
@@ -81,8 +81,8 @@ class MaintenancesController < ApplicationController
       :car_id, :title, :maintenance_day, :category, :work_difficulty,
       :work_time_minutes, :work_cost, :summary, :related_information, :status,
       images: [],
-      steps_attributes: [:id, :position, :title, :body, :_destroy],
-      tools_attributes: [:id, :name, :_destroy]
+      steps_attributes: [ :id, :position, :title, :body, :_destroy ],
+      tools_attributes: [ :id, :name, :_destroy ]
     )
   end
 

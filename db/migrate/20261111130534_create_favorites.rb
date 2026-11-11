@@ -5,7 +5,7 @@ class CreateFavorites < ActiveRecord::Migration[8.1]
       t.references :maintenance, null: false, foreign_key: true
 
       t.timestamps
-      t.index [:user_id, :maintenance_id], unique: true
+      t.index [ :user_id, :maintenance_id ], unique: true
     end
   end
 end

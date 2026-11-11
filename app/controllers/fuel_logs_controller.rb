@@ -1,8 +1,8 @@
 class FuelLogsController < ApplicationController
   before_action :authenticate_user!
-  before_action :reject_guest_user, except: [:index]
+  before_action :reject_guest_user, except: [ :index ]
   before_action :set_car
-  before_action :set_fuel_log, only: [:edit, :update, :destroy]
+  before_action :set_fuel_log, only: [ :edit, :update, :destroy ]
 
   # 車ごとの給油の履歴（新しい順）
   def index
@@ -52,7 +52,7 @@ class FuelLogsController < ApplicationController
   end
 
   def fuel_log_params
-    params.expect(fuel_log: [:refueled_on, :odometer, :trip_distance, :fuel_amount, :fuel_type])
+    params.expect(fuel_log: [ :refueled_on, :odometer, :trip_distance, :fuel_amount, :fuel_type ])
   end
 
   # 給油時の走行距離が、今の車の走行距離より大きいときだけ更新する

@@ -1,8 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :reject_guest_user, except: [:index, :show]
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_owner, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :reject_guest_user, except: [ :index, :show ]
+  before_action :set_group, only: [ :show, :edit, :update, :destroy ]
+  before_action :ensure_owner, only: [ :edit, :update, :destroy ]
 
   def index
     @groups = Group.active
@@ -62,6 +62,6 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.expect(group: [:name, :introduction, :theme, :rules, :image])
+    params.expect(group: [ :name, :introduction, :theme, :rules, :image ])
   end
 end

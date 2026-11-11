@@ -7,7 +7,7 @@ class CreateGroupUsers < ActiveRecord::Migration[8.1]
       t.integer :status, null: false, default: 0
 
       t.timestamps
-      t.index [:group_id, :user_id], unique: true
+      t.index [ :group_id, :user_id ], unique: true
     end
   end
 end

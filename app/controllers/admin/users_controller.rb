@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :set_user, only: [:show, :destroy, :restore]
+  before_action :set_user, only: [ :show, :destroy, :restore ]
 
   def index
     @users = filter_by_status(User)

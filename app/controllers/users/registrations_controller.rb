@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :reject_guest_user, only: [:edit, :update, :destroy]
+  before_action :reject_guest_user, only: [ :edit, :update, :destroy ]
 
   # 退会：データは消さずに「退会した印」をつける（管理画面から戻せる）
   def destroy

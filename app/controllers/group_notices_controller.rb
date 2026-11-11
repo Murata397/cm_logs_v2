@@ -26,6 +26,6 @@ class GroupNoticesController < ApplicationController
   end
 
   def notice_params
-    params.expect(group_notice: [:title, :body])
+    params.expect(group_notice: [ :title, :body ])
   end
 end

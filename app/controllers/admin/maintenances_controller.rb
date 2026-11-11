@@ -1,5 +1,5 @@
 class Admin::MaintenancesController < Admin::BaseController
-  before_action :set_record, only: [:destroy, :restore]
+  before_action :set_record, only: [ :destroy, :restore ]
 
   def index
     @records = filter_by_status(Maintenance).includes(:user, :car)

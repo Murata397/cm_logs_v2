@@ -1,5 +1,5 @@
 class Admin::CommentsController < Admin::BaseController
-  before_action :set_record, only: [:destroy, :restore]
+  before_action :set_record, only: [ :destroy, :restore ]
 
   def index
     @records = filter_by_status(Comment).includes(:user, :maintenance)

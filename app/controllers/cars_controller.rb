@@ -1,7 +1,7 @@
 class CarsController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
-  before_action :reject_guest_user, except: [:index, :show]
-  before_action :set_car, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [ :show ]
+  before_action :reject_guest_user, except: [ :index, :show ]
+  before_action :set_car, only: [ :edit, :update, :destroy ]
 
   def index
     @cars = current_user.cars
@@ -18,7 +18,7 @@ class CarsController < ApplicationController
               .find(params[:id])
     @owner = user_signed_in? && @car.user_id == current_user.id
     @maintenances = @car.maintenances.visible.latest.includes(:user, :car, images_attachments: :blob)
-    @schedules = @car.inspection_schedules.sort_by { |s| [s.next_due_on ? 0 : 1, s.next_due_on || Date.current] } if @owner
+    @schedules = @car.inspection_schedules.sort_by { |s| [ s.next_due_on ? 0 : 1, s.next_due_on || Date.current ] } if @owner
   end
 
   def new
@@ -57,6 +57,6 @@ class CarsController < ApplicationController
   end
 
   def car_params
-    params.expect(car: [:car_name, :manufacturer_name, :car_model, :odometer, :purpose, :image])
+    params.expect(car: [ :car_name, :manufacturer_name, :car_model, :odometer, :purpose, :image ])
   end
 end

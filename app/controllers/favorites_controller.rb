@@ -1,7 +1,7 @@
 class FavoritesController < ApplicationController
   before_action :authenticate_user!
-  before_action :reject_guest_user, except: [:index]
-  before_action :set_maintenance, except: [:index]
+  before_action :reject_guest_user, except: [ :index ]
+  before_action :set_maintenance, except: [ :index ]
 
   # 自分がお気に入りした整備記録（お気に入りした順）
   def index

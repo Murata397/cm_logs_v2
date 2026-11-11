@@ -8,11 +8,11 @@ module MaintenancesHelper
 
   # セレクトボックス用（["簡単", "easy"], ...）
   def difficulty_options
-    DIFFICULTY_LABELS.map { |key, label| [label, key] }
+    DIFFICULTY_LABELS.map { |key, label| [ label, key ] }
   end
 
   def sort_options
-    Maintenance::SORTS.map { |key, label| [label, key] }
+    Maintenance::SORTS.map { |key, label| [ label, key ] }
   end
 
   # 何か条件が指定されているか

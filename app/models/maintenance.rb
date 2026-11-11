@@ -54,7 +54,7 @@ class Maintenance < ApplicationRecord
     end
   }
 
-  
+
   validate :car_must_belong_to_user
 
   def favorited_by?(user)

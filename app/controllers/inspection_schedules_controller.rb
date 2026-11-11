@@ -2,7 +2,7 @@ class InspectionSchedulesController < ApplicationController
   before_action :authenticate_user!
   before_action :reject_guest_user
   before_action :set_car
-  before_action :set_schedule, only: [:edit, :update, :destroy]
+  before_action :set_schedule, only: [ :edit, :update, :destroy ]
 
   def new
     @schedule = @car.inspection_schedules.build
@@ -44,6 +44,6 @@ class InspectionSchedulesController < ApplicationController
   end
 
   def schedule_params
-    params.expect(inspection_schedule: [:item, :next_due_on, :next_due_odometer])
+    params.expect(inspection_schedule: [ :item, :next_due_on, :next_due_odometer ])
   end
 end

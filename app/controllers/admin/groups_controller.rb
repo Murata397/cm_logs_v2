@@ -1,5 +1,5 @@
 class Admin::GroupsController < Admin::BaseController
-  before_action :set_record, only: [:destroy, :restore]
+  before_action :set_record, only: [ :destroy, :restore ]
 
   def index
     @records = filter_by_status(Group).includes(:owner)

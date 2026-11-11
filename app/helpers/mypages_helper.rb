@@ -6,7 +6,7 @@ module MypagesHelper
   # 燃費の記録を、グラフ上の点の位置（x, y）に変換する
   def fuel_chart(logs)
     values = logs.map { |log| log.efficiency.to_f }
-    min = [(values.min - 2).floor, 0].max
+    min = [ (values.min - 2).floor, 0 ].max
     max = (values.max + 2).ceil
     range = (max - min).nonzero? || 1
     inner_w = CHART_WIDTH - CHART_PADDING * 2
